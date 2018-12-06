@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint
 from instance.config import app_config
 from db_config import *
-from .api.v1 import version_two as v2
+from app.api.v2 import version_two as v2
 
 def create_app(config_name='testing'):
     app = Flask(__name__, instance_relative_config=True)
