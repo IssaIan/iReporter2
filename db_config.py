@@ -1,9 +1,6 @@
 import psycopg2
 import os
 
-
-# url = os.getenv('DATABASE_URL')
-# test_url = os.getenv('DATABASE_URL')
 url = "dbname='ireporter' host='localhost' port='5432' user='issa' password='Maina9176'"
 
 def connection(url):
@@ -13,10 +10,6 @@ def connection(url):
 def init_db():
     conn = connection(url)
     return conn
-
-# def init_test_db():
-#     conn = connection(test_url)
-#     return conn
 
 def create_tables():
     conn = connection(url)
