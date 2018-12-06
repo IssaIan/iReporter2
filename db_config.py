@@ -36,7 +36,7 @@ def tables():
     )"""
     incidents = """CREATE TABLE IF NOT EXISTS incidents (
         incident_id serial PRIMARY KEY NOT NULL,
-        created_by numeric NOT NULL,
+        created_by serial NOT NULL,
         type character varying(20) NOT NULL,
         description character varying (200) NOT NULL,
         status character varying(20) DEFAULT 0,
