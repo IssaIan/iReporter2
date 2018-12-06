@@ -53,11 +53,11 @@ class Incident(Resource, GetError):
         else:
             return self.notFound()
     def get(self, incident_id):
-        inci = self.db.find_by_id(incident_id)
+        incident = self.db.find_by_id(incident_id)
 
         return make_response(jsonify({
             'Message':'Incident returned successfully',
-            'Data':inci
+            'Data':incident
         }), 200)
     
 

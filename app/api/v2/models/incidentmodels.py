@@ -38,7 +38,7 @@ class IncidentModels():
 
     def find_by_id(self, id):
         curr = self.incidents.cursor()
-        curr.execute("SELECT * FROM incidents WHERE incident_id = (%s);", (id,))
+        curr.execute("SELECT FROM incidents WHERE incident_id = (%s);", (id,))
         row = curr.fetchone()
         incident = []
         for items in enumerate(row):
@@ -55,12 +55,12 @@ class IncidentModels():
             )
             incident.append(data)
         return incident
-
+        
 
     def delete(self, id):
         curr = self.incidents.cursor()
-        curr.execute("DELETE * FROM incidents WHERE incident_id = (%s);",(id,))
+        curr.execute("DELETE FROM incidents WHERE incident_id = (%s);",(id,))
         self.incidents.commit()
-        return True
+
 
     
