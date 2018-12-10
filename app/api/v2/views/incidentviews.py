@@ -60,18 +60,3 @@ class Incident(Resource):
         }), 200)
 
 
-class LocationUpdate(Resource):
-    def __init__(self):
-        self.db = IncidentModels()
-
-    def patch(self, incident_id):
-        data = request.get_json()
-        incident = self.db.find_by_id(incident_id)
-        if incident:
-            incident.updatelocation(data['location'])
-            return make_response(jsonify({
-                'Message': 'Updated incident location'
-            }), 200)
-        return jsonify({
-                'Message' : 'Record not found!'
-            }, 404)
