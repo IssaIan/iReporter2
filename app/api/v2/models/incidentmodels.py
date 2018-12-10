@@ -10,7 +10,6 @@ class IncidentModels():
         self.incidents = init_db()
 
     def save_incident(self, typee, description, status, location):
-
         curr = self.incidents.cursor(cursor_factory=RealDictCursor)
         curr.execute(
             "INSERT INTO incidents(type, description, status, location)VALUES(%s, %s, %s, %s)",
@@ -35,5 +34,3 @@ class IncidentModels():
         curr = self.incidents.cursor(cursor_factory=RealDictCursor)
         curr.execute("DELETE FROM incidents WHERE incident_id = {}".format(id))
         self.incidents.commit()
-
-    
