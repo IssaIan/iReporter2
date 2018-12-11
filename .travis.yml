@@ -14,7 +14,11 @@ install:
   - pip install coverage 
   - pip install codecov
 
-
+services:
+  - postgresql
+before_script:
+  - psql -c "CREATE DATABASE " -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres;" -U postgres
  # A command/method to run tests
 script:
   - pytest
