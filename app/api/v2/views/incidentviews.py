@@ -18,9 +18,19 @@ class Incidents(Resource):
         location = data['location']
         created_on = datetime.datetime.now()
 
+        resp =None
+        if typee.isspace() or typee == "":
+            resp = {'Message' : 'Type cannot be empty!'}
+        if description.isspace() or description == "":
+            resp = {'Message' : 'Description cannot be empty!'}
+        if location.isspace() or description == "":
+            resp = {'Message' : 'Location cannot be empty!'}
+        if resp is not None:
+            return jsonify(resp)
+
         self.db.save_incident(typee, description, status, location)
         return make_response(jsonify({
-            'Message': 'Success'
+            'Message': 'Record successfully saved!'
         }), 201)
 
     def get(self):
@@ -43,9 +53,13 @@ class Incident(Resource):
         self.db = IncidentModels()
 
     def delete(self, incident_id):
+        if not self.db.find_by_id(incident_id):
+            return jsonify({
+                'Message' : 'The record you are trying to delete has not been found!'
+            })
         self.db.delete(incident_id)
         return {
-            'Message': 'Successfully deleted'
+            'Message': 'Record successfully deleted from the database!'
         }, 200
 
     def get(self, incident_id):
@@ -60,3 +74,39 @@ class Incident(Resource):
         }), 200)
 
 
+class LocationUpdate(Resource):
+    def __init__(self):
+        self.db = IncidentModels()
+
+    def patch(self, incident_id):
+        data = request.get_json()
+        location = data['location']
+        incident = self.db.find_by_id(incident_id)
+        if incident:
+            self.db.updatelocation(location, incident_id)
+            return make_response(jsonify({
+                'Message': 'Updated incident location',
+                'data' : incident 
+            }), 200)
+        return jsonify({
+                'Message' : 'Record not found!'
+            }, 404)
+
+
+class CommentUpdate(Resource):
+    def __init__(self):
+        self.db = IncidentModels()
+
+    def patch(self, incident_id):
+        data = request.get_json()
+        comment = data['description']
+        incident = self.db.find_by_id(incident_id)
+        if incident:
+            self.db.updatecomment(comment, incident_id)
+            return make_response(jsonify({
+                'Message' : 'Updated incident comment',
+                'data' : incident 
+            }), 200)
+        return jsonify({
+            'Message' : 'Record not found!'
+        }, 404)
