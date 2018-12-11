@@ -4,22 +4,22 @@ from instance.config import Config
 import datetime
 from flask import Flask, Blueprint, request, jsonify
 from instance.config import app_config
-from db_config import create_tables
 from app.api.v2 import version_two as v2
+
+
 
 jwt = JWTManager()
 timeout = datetime.timedelta(4000)
 
 
-def create_app(config_name='testing'):
+def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     app.url_map.strict_slashes = False
-    app.config.from_object(app_config['testing'])
-    app.config.from_pyfile('config.py')
+    app.config.from_object(app_config[config_name])
     app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timeout
+
     jwt.init_app(app)
-    create_tables()
     app.register_blueprint(v2)
 
     @app.errorhandler(404)
