@@ -9,7 +9,6 @@ class Config(object):
     DB_PORT = os.getenv('DB_PORT')
     DB_USER = os.getenv('DB_USER')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     DB_URL = os.getenv('DB_URL')
 
 class DevelopmentConfig(Config):
