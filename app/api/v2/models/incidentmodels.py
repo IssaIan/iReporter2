@@ -10,10 +10,10 @@ class IncidentModels(Db):
     def __init__(self):
         super().__init__()
         
-    def save_incident(self, typee, description, status, location):
+    def save_incident(self, created_by, typee, description, status, location):
         self.cursor.execute(
-            "INSERT INTO incidents(type, description, status, location)VALUES(%s, %s, %s, %s)",
-            (typee, description, status, location))
+            "INSERT INTO incidents(created_by, type, description, status, location)VALUES(%s, %s, %s, %s, %s)",
+            (created_by, typee, description, status, location))
         self.connect.commit()
 
     def get_all(self):
@@ -27,19 +27,26 @@ class IncidentModels(Db):
         incident = self.cursor.fetchall()
         return incident
 
-    def delete(self, id):
+    def delete(self, id, user_id):
         self.find_by_id(id)
-        self.cursor.execute("DELETE FROM incidents WHERE incident_id = {}".format(id))
+        self.cursor.execute("DELETE FROM incidents WHERE incident_id = {} and created_by = {}".format(id, user_id))
         self.connect.commit()
 
-    def updatelocation(self, location, id):
+    def updatelocation(self, location, id, user_id):
         self.cursor.execute(
-            "UPDATE incidents SET location = '{}' WHERE incident_id = {}".format(location, id)
+            "UPDATE incidents SET location = '{}' WHERE incident_id = {} and created_by = {}".format(location, id, user_id)
         )
         self.connect.commit()
 
-    def updatecomment(self, comment, id):
+    def updatecomment(self, comment, id, user_id):
         self.cursor.execute(
-            "UPDATE incidents SET description = '{}' WHERE incident_id = {}".format(comment, id)
+            "UPDATE incidents SET description = '{}' WHERE incident_id = {} and created_by = {}".format(comment, id, user_id)
         )
         self.connect.commit()
+
+    def get_by_user_id(self, id):
+        self.cursor.execute(
+            "SELECT * FROM incidents WHERE created_by = {}".format(id)
+        )
+        incident = self.cursor.fetchall()
+        return incident

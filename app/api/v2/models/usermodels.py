@@ -10,13 +10,11 @@ class UserModels(Db):
     def __init__(self):
         super().__init__()
 
-
     def save_user(self, first_name, last_name, username, email, phonenumber, password):
         self.cursor.execute(
             "INSERT INTO users(first_name, last_name, username, email, phonenumber, password)VALUES(%s, %s, %s, %s, %s, %s)",
             (first_name, last_name, username, email, phonenumber, password))
         self.connect.commit()
-
 
     def get_all(self):
         self.cursor.execute("SELECT * FROM users")
@@ -58,9 +56,8 @@ class UserModels(Db):
             return None
 
     def check_password(self, username, password):
-        self.password = self.get_password(username)
-        match = check_password_hash(password, self.password)
-        return match
+        dbpassword = self.get_password(username)
+        return check_password_hash(dbpassword, password)
 
     def get_password(self, username):
         self.cursor.execute(
@@ -81,6 +78,5 @@ class UserModels(Db):
         token = self.generate_jwt_token(username)
         return token
 
-    # def updatestatus(self, username, ):
-    #     user = self.get_user_name(username)
-    #     if user.get('is_admin') == True:
+    def confirmpassword(self, password, confirm_password):
+        return check_password_hash(password, confirm_password)
