@@ -3,6 +3,7 @@ from flask_restful import Resource
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.api.v2.models.incidentmodels import IncidentModels
+from app.api.v2.models.usermodels import UserModels
 import datetime
 
 
@@ -17,7 +18,6 @@ class Incidents(Resource):
         created_by = get_jwt_identity()
         typee = data['typee']
         description = data['description']
-        status = data['status']
         location = data['location']
 
         resp = None
@@ -30,7 +30,7 @@ class Incidents(Resource):
         if resp is not None:
             return jsonify(resp)
 
-        self.db.save_incident(created_by, typee, description, status, location)
+        self.db.save_incident(created_by, typee, description, location)
         return {
             'Message': 'Record successfully saved!'
         }, 201
@@ -136,11 +136,18 @@ class CommentUpdate(Resource):
 class Admin(Resource):
     def __init__(self):
         self.db = IncidentModels()
+        self.admin = UserModels()
 
+    @jwt_required
     def patch(self, incident_id):
         data = request.get_json()
         status = data['status']
         incident = self.db.find_by_id(incident_id)
+        
+        if not self.admin.isadmin(get_jwt_identity()):
+            return{
+                'Message' : 'You are not an admin!'
+            }, 403
         if not incident:
             return {
                 'Message': 'Record not found!'

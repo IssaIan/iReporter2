@@ -10,10 +10,10 @@ class UserModels(Db):
     def __init__(self):
         super().__init__()
 
-    def save_user(self, first_name, last_name, username, email, phonenumber, password):
+    def save_user(self, first_name, last_name, username, email, phonenumber, password, is_admin):
         self.cursor.execute(
-            "INSERT INTO users(first_name, last_name, username, email, phonenumber, password)VALUES(%s, %s, %s, %s, %s, %s)",
-            (first_name, last_name, username, email, phonenumber, password))
+            "INSERT INTO users(first_name, last_name, username, email, phonenumber, password, is_admin)VALUES(%s, %s, %s, %s, %s, %s, %s)",
+            (first_name, last_name, username, email, phonenumber, password, is_admin))
         self.connect.commit()
 
     def get_all(self):
@@ -80,3 +80,10 @@ class UserModels(Db):
 
     def confirmpassword(self, password, confirm_password):
         return check_password_hash(password, confirm_password)
+
+    def isadmin(self, userid):
+        self.cursor.execute(
+            "SELECT * FROM users WHERE user_id = {} and is_admin = 'true'".format(userid)
+        )
+        user = self.cursor.fetchall()
+        return user
