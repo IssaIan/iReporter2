@@ -2,41 +2,35 @@ import psycopg2
 import re
 from flask_restful import request
 from werkzeug.security import check_password_hash, generate_password_hash
-from psycopg2.extras import RealDictCursor
 from flask_jwt_extended import get_jwt_identity, create_access_token
-from db_config import *
+from db_config import Db
 
 
-class UserModels():
+class UserModels(Db):
     def __init__(self):
-        self.users = init_db()
+        super().__init__()
 
     def save_user(self, first_name, last_name, username, email, phonenumber, password):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-        curr.execute(
+        self.cursor.execute(
             "INSERT INTO users(first_name, last_name, username, email, phonenumber, password)VALUES(%s, %s, %s, %s, %s, %s)",
-            (first_name, last_name, username, email, phonenumber, generate_password_hash(password)))
-        self.users.commit()
+            (first_name, last_name, username, email, phonenumber, password))
+        self.connect.commit()
 
     def get_all(self):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-        curr.execute("SELECT * FROM users")
-        userlist = curr.fetchall()
+        self.cursor.execute("SELECT * FROM users")
+        userlist = self.cursor.fetchall()
         return userlist
 
     def get_user_name(self, username):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-
-        curr.execute(
-            "SELECT username FROM users WHERE username='{}'".format(username))
-        user = curr.fetchall()
+        self.cursor.execute(
+            "SELECT * FROM users WHERE username='{}'".format(username))
+        user = self.cursor.fetchall()
         return user
 
     def get_email(self, email):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-        curr.execute(
+        self.cursor.execute(
             "SELECT * FROM users WHERE email='{}'".format(email))
-        row = curr.fetchone()
+        row = self.cursor.fetchone()
         if row:
             email = row.get('email')
             return email
@@ -52,10 +46,9 @@ class UserModels():
         return True
 
     def get_id(self, username):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-        curr.execute(
+        self.cursor.execute(
             "SELECT user_id FROM users WHERE username='{}'".format(username))
-        user_id = curr.fetchone()
+        user_id = self.cursor.fetchone()
         if user_id:
             id = user_id.get('user_id')
             return id
@@ -63,15 +56,13 @@ class UserModels():
             return None
 
     def check_password(self, username, password):
-        self.password = self.get_password(username)
-        match = check_password_hash(password, self.password)
-        return match
+        dbpassword = self.get_password(username)
+        return check_password_hash(dbpassword, password)
 
     def get_password(self, username):
-        curr = self.users.cursor(cursor_factory=RealDictCursor)
-        curr.execute(
+        self.cursor.execute(
             "SELECT password FROM users WHERE username='{}'".format(username))
-        pas = curr.fetchone()
+        pas = self.cursor.fetchone()
         if pas:
             password = pas.get('password')
             return password
@@ -86,3 +77,6 @@ class UserModels():
     def user_login(self, username):
         token = self.generate_jwt_token(username)
         return token
+
+    def confirmpassword(self, password, confirm_password):
+        return check_password_hash(password, confirm_password)

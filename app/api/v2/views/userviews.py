@@ -5,7 +5,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
 import datetime
 from app.api.v2.models.usermodels import UserModels
-from db_config import *
 
 
 class Users(Resource):
@@ -14,25 +13,26 @@ class Users(Resource):
 
     def post(self):
         data = request.get_json()
-        first_name = data['first_name']
-        last_name = data['last_name']
-        username = data['username']
-        email = data['email']
-        phonenumber = data['phonenumber']
+        first_name = data['first_name'].strip()
+        last_name = data['last_name'].strip()
+        username = data['username'].lower().strip()
+        email = data['email'].strip()
+        phonenumber = data['phonenumber'].strip()
         date_created = datetime.datetime.now()
-        password = data['password']
-        confirm_password = data['confirm_password']
+        password = generate_password_hash(data['password'].strip())
+        confirm_password = data['confirm_password'].strip()
 
         resp = None
         if password.isspace() or len(password.strip()) < 8:
-            resp = {'Message': 'Please fill in a valid password!'}
+            resp = {
+                'Message': 'Please fill in a valid password! Password must be 8 characters long!'}
         if email.isspace() or not self.db.validate_email(email):
             resp = {'Message': 'Please enter a valid email!'}
-        if first_name.isspace():
+        if first_name.isspace() or first_name == "":
             resp = {'Message': 'Please enter a first name!'}
-        if last_name.isspace():
+        if last_name.isspace() or last_name == "":
             resp = {'Message': 'Please enter a last name!'}
-        if username.isspace():
+        if username.isspace() or username == "":
             resp = {'Message': 'Please enter a username!'}
 
         if resp is not None:
@@ -45,8 +45,8 @@ class Users(Resource):
             return jsonify({'Message': 'Username already exists!'})
         if emailconfirm:
             return jsonify({'Message': 'Email already exists!'})
-        if password != confirm_password:
-            return jsonify({'Message': 'Password already exists!'})
+        if not self.db.confirmpassword(password, confirm_password):
+            return jsonify({'Message': 'Please ensure that both passwords match!'})
 
         self.db.save_user(first_name, last_name, username,
                           email, phonenumber, password)
@@ -55,11 +55,13 @@ class Users(Resource):
     def get(self):
         result = self.db.get_all()
         if result == []:
-            return self.notFound()
+            return jsonify({
+                'Message': 'No user found!'
+            }, 404)
         else:
             return make_response(jsonify(
                 {
-                    'Message': 'Records returned successfully',
+                    'Message': 'Records returned successfully!',
                     'Data': result
                 }
             ), 200)
@@ -68,11 +70,11 @@ class Users(Resource):
 class Login(Resource):
     def __init__(self):
         self.db = UserModels()
-
+    
     def post(self):
         data = request.get_json()
         username = data['username']
-        password = generate_password_hash(data['password'])
+        password = data['password']
         user = self.db.get_user_name(username)
 
         if username.isspace() or password.isspace():
@@ -82,7 +84,7 @@ class Login(Resource):
             return jsonify({'Message': 'Please enter a valid password!'})
 
         if not user:
-            return jsonify({'Message': 'No user found'}, 404)
+            return jsonify({'Message': 'No user found!'}, 404)
 
         if not self.db.check_password(username, password):
             return jsonify({'Message': 'Wrong password!'})
@@ -91,5 +93,6 @@ class Login(Resource):
         if login_token:
             return jsonify({
                 'Message': 'You are now logged in!',
-                'Token': login_token
+                'Token': login_token,
+                'User': user
             }, 200)
