@@ -23,7 +23,8 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "issamwangi@gmail.com"
+            "email": "issamwangi@gmail.com",
+            "is_admin": "true"
         }
 
         self.test_user2 = {
@@ -33,7 +34,8 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Mwnjina9171",
             "phonenumber": "0722496986",
-            "email": "njokimwangi@gmail.com"
+            "email": "njokimwangi@gmail.com",
+            "is_admin": "false"
         }
 
         self.test_user3 = {
@@ -43,7 +45,8 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "kennmwangi@gmail.com"
+            "email": "kennmwangi@gmail.com",
+            "is_admin": "false"
         }
 
         self.test_user4 = {
@@ -53,7 +56,8 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "issa2mwangi@gmail.com"
+            "email": "issa2mwangi@gmail.com",
+            "is_admin": "false"
         }
 
         self.test_user5 = {
@@ -63,9 +67,20 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "issamwangi@gmail.com"
+            "email": "issamwangi@gmail.com",
+            "is_admin": "false"
         }
-        
+        self.test_user6 = {
+            "first_name": "",
+            "last_name": "Mwangi",
+            "username": "issa22",
+            "password": "Maina9176",
+            "confirm_password": "Maina9176",
+            "phonenumber": "0722496986",
+            "email": "issamwangi22@gmail.com",
+            "is_admin": "false"
+        }
+
         self.test_incident = {
             "typee": "redflag",
             "description": "Corruption cases in Nairobi district",
@@ -84,12 +99,28 @@ class BaseTest(TestCase):
             "status": "Draft",
             "location": "Nairobi"
         }
-        self.testlogin = {'username': self.test_user['username'],
+        self.update_incidentstatus = {
+            "typee": "redflag",
+            "description": "Police brutality at the CBD",
+            "status": "Under-investigation",
+            "location": "Nairobi"
+        }
+
+        self.adminlogin = {'username': self.test_user['username'],
                           'password': self.test_user['password']}
+        self.loginnormaluser = {'username': self.test_user5['username'],
+                          'password': self.test_user5['password']}
 
     def login(self):
         response = self.app.post('/api/v2/login',
-                                 json=self.testlogin,
+                                 json=self.adminlogin,
+                                 headers={'content-type': 'application/json'}
+                                 )
+        return response
+
+    def loginuser(self):
+        response = self.app.post('/api/v2/login',
+                                 json=self.loginnormaluser,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
@@ -101,36 +132,66 @@ class BaseTest(TestCase):
                                  )
         return response
 
+    def registerwithoutfirstname(self):
+        response = self.app.post('/api/v2/users',
+                                 json=self.test_user6,
+                                 headers={'content-type': 'application/json'}
+                                 )
+        return response
+
+    def userregistration(self):
+        response = self.app.post('/api/v2/users',
+                                 json=self.test_user5,
+                                 headers={'content-type': 'application/json'}
+                                 )
+        return response
+
     def wrongpasswordregistration(self):
         response = self.app.post('/api/v2/users',
-                                json = self.test_user2,
-                                headers={'content-type': 'application/json'}
-                                )
+                                 json=self.test_user2,
+                                 headers={'content-type': 'application/json'}
+                                 )
         return response
 
     def existingusernameregistration(self):
         response = self.app.post('/api/v2/users',
-                                json = self.test_user4,
-                                headers={'content-type': 'application/json'}
-                                )
-        return response
-    
-    def existingemailregistration(self):
-        response = self.app.post('/api/v2/users',
-                                json = self.test_user5,
-                                headers={'content-type': 'application/json'}
-                                )
+                                 json=self.test_user4,
+                                 headers={'content-type': 'application/json'}
+                                 )
         return response
 
-    def user_token(self):
+    def existingemailregistration(self):
+        response = self.app.post('/api/v2/users',
+                                 json=self.test_user5,
+                                 headers={'content-type': 'application/json'}
+                                 )
+        return response
+
+    def admin_token(self):
         self.registration()
         self.resp = self.login()
         self.tok = json.loads(self.resp.data)
         self.token = self.tok[0]['Token']
-        print(self.token)
+        return self.token
+    
+    def user_token(self):
+        self.userregistration()
+        self.resp = self.loginuser()
+        self.tok = json.loads(self.resp.data)
+        self.token = self.tok[0]['Token']
         return self.token
 
+
     def create_incident(self):
+        token = self.admin_token()
+        response = self.app.post('/api/v2/incidents',
+                                 json=self.test_incident,
+                                 headers={'Authorization': 'Bearer {}'.format(token),
+                                          'content_type': 'application/json'}
+                                 )
+        return response
+
+    def normal_user_create_incident(self):
         token = self.user_token()
         response = self.app.post('/api/v2/incidents',
                                  json=self.test_incident,

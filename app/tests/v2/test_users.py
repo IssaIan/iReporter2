@@ -42,12 +42,17 @@ class UsersTest(BaseTest):
         self.assertEqual(result['Message'], 'Email already exists!')
         self.assertEqual(response.status_code, 401)
 
-    def getallusers(self):
+    def test_getallusers(self):
         self.registration()
         response = self.app.get('/api/v2/users')
         result = json.loads(response.data)
-        self.assertEqual(result[0]['Message'], 'Records returned successfully')
+        self.assertEqual(result['Message'], 'Records returned successfully!')
         self.assertEqual(response.status_code, 200)
+        
+    def test_firstnamemissing(self):
+        response = self.registerwithoutfirstname()
+        result = json.loads(response.data)
+        self.assertEqual(result['Message'], 'Please enter a first name!')
         
     
     
