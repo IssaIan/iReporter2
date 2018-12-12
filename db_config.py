@@ -55,6 +55,9 @@ class Db:
             self.cursor.execute(query)
         self.connect.commit()
 
-    def destroy_tables(self, name):
-        self.cursor.execute("DROP TABLE IF EXISTS " + name)
+    def destroy_tables(self):
+        self.cursor.execute("DROP TABLE IF EXISTS incidents")
+        self.cursor.execute("DROP TABLE IF EXISTS users")
         self.connect.commit()
+        self.connect.commit()
+        self.connect.close()
