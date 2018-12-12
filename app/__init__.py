@@ -9,7 +9,7 @@ from app.api.v2 import version_two as v2
 from db_config import Db
 
 
-timeout = datetime.timedelta(4000)
+timeout = datetime.timedelta(hours = 12)
 
 
 def create_app(config_name):
