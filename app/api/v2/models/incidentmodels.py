@@ -50,3 +50,9 @@ class IncidentModels(Db):
         )
         incident = self.cursor.fetchall()
         return incident
+
+    def updatestatus(self, status, id):
+        self.cursor.execute(
+            "UPDATE incidents SET status = '{}' WHERE incident_id = {}".format(status, id)
+        )
+        self.connect.commit()
