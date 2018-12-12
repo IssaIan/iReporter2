@@ -8,19 +8,19 @@ from app.api.v2 import version_two as v2
 
 
 
-jwt = JWTManager()
+
 timeout = datetime.timedelta(4000)
 
 
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
+    app.register_blueprint(v2)
     app.url_map.strict_slashes = False
     app.config.from_object(app_config[config_name])
     app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timeout
-
-    jwt.init_app(app)
-    app.register_blueprint(v2)
+    JWTManager(app)
+    
 
     @app.errorhandler(404)
     def invalid_endpoint(error=None):
