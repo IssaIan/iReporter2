@@ -6,10 +6,9 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET = os.getenv('SECRET')
     DB_HOST = os.getenv('DB_HOST')
-    DB_PORT = os.getenv('DB_PORT')
     DB_USER = os.getenv('DB_USER')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
-    DB_URL = os.getenv('DB_URL')
+   
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
