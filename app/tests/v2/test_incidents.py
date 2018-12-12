@@ -1,0 +1,79 @@
+import json
+from app.tests.v2.base_test import BaseTest
+
+
+class IncidentTests(BaseTest):
+
+    def test_create_record(self):
+        response = self.create_incident()
+        result = json.loads(response.data)
+        self.assertEqual(result['Message'], 'Record successfully saved!')
+        self.assertEqual(response.status_code, 201)
+
+    def test_get_incident_byId(self):
+        self.create_incident()
+        response = self.app.get('/api/v2/incidents/1')
+        result = json.loads(response.data)
+        self.assertEqual(result[0]['Message'], 'Record returned successfully')
+        self.assertEqual(response.status_code, 200)
+
+    def test_fail_getbyId(self):
+        self.create_incident()
+        response = self.app.get('/api/v2/incidents/100')
+        result=json.loads(response.data)
+        self.assertEqual(result['Message'], 'Record not found!')
+        self.assertEqual(response.status_code, 404)
+
+    def test_fetch_all_incidents(self):
+        self.create_incident()
+        response=self.app.get('/api/v2/incidents', headers = {'Authorization': 'Bearer {}'.format(self.token),
+                               'content-type': 'application/json'})
+        result=json.loads(response.data)
+        self.assertEqual(result[0]['Message'], 'Records returned successfully')
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_incident_location(self):
+        self.create_incident()
+        response=self.app.patch('/api/v2/incidents/1/location',
+                                  json=self.update_incidentlocation,
+                                  headers={'Authorization': 'Bearer {}'.format(self.token),
+                               'content-type': 'application/json'}
+                                  )
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_incident_description(self):
+        self.create_incident()
+        response=self.app.patch('/api/v2/incidents/1/comment',
+                                  json=self.update_incidentcomment,
+                                  headers={'Authorization': 'Bearer {}'.format(self.token),
+                               'content-type': 'application/json'}
+                                  )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual({'Message' : 'Updated incident comment successfully!'}, response.get_json())
+
+    def test_updating_a_nonexistence_incident(self):
+        self.create_incident()
+        response=self.app.patch('/api/v2/incidents/20/comment',
+                                  json=self.update_incidentcomment,
+                                  headers={'Authorization': 'Bearer {}'.format(self.token),
+                                           'content-type': 'application/json'})
+        self.assertEqual({'Message': 'Record not found!'}, response.get_json())
+
+    def test_delete_incident(self):
+        self.create_incident()
+        response=self.app.delete('/api/v2/incidents/1', 
+                                headers={'Authorization': 'Bearer {}'.format(self.token),
+                                        'content-type': 'application/json'
+                                        }
+                                                                    
+                                )
+        self.assertEqual({'Message': 'Record successfully deleted from the database!'},
+                         response.get_json())
+        self.assertEqual(response.status_code, 200)
+
+    def test_fail_delete_incident(self):
+        self.create_incident()
+        response=self.app.delete('/api/v2/incidents/200',  headers={'Authorization': 'Bearer {}'.format(self.token),
+                               'content-type': 'application/json'})
+        self.assertEqual({'Message': 'The record you are trying to delete has not been found!',
+                          }, response.get_json())

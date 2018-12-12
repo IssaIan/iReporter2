@@ -36,28 +36,28 @@ class Users(Resource):
             resp = {'Message': 'Please enter a username!'}
 
         if resp is not None:
-            return jsonify(resp)
+            return resp, 422
 
         user = self.db.get_user_name(username)
         emailconfirm = self.db.get_email(email)
 
         if user:
-            return jsonify({'Message': 'Username already exists!'})
+            return {'Message': 'Username already exists!'}, 401
         if emailconfirm:
-            return jsonify({'Message': 'Email already exists!'})
+            return {'Message': 'Email already exists!'}, 401
         if not self.db.confirmpassword(password, confirm_password):
-            return jsonify({'Message': 'Please ensure that both passwords match!'})
+            return {'Message': 'Please ensure that both passwords match!'}, 401
 
         self.db.save_user(first_name, last_name, username,
                           email, phonenumber, password)
-        return jsonify({'Message': 'User saved successfully'}, 201)
+        return {'Message': 'User saved successfully'}, 201
 
     def get(self):
         result = self.db.get_all()
         if result == []:
-            return jsonify({
+            return {
                 'Message': 'No user found!'
-            }, 404)
+            }, 404
         else:
             return make_response(jsonify(
                 {
@@ -70,24 +70,24 @@ class Users(Resource):
 class Login(Resource):
     def __init__(self):
         self.db = UserModels()
-    
+
     def post(self):
         data = request.get_json()
         username = data['username']
         password = data['password']
         user = self.db.get_user_name(username)
 
-        if username.isspace() or password.isspace():
-            return jsonify({'Message': 'Please provide all credentials!'})
+        if username.isspace() or username == "":
+            return {'Message': 'Please provide all credentials!'}, 422
 
         if password.isspace() or password is None:
-            return jsonify({'Message': 'Please enter a valid password!'})
+            return {'Message': 'Please enter a valid password!'}, 422
 
         if not user:
-            return jsonify({'Message': 'No user found!'}, 404)
+            return {'Message': 'No user with that username found!'}, 404
 
         if not self.db.check_password(username, password):
-            return jsonify({'Message': 'Wrong password!'})
+            return {'Message': 'Wrong password!'}, 401
 
         login_token = self.db.user_login(username)
         if login_token:

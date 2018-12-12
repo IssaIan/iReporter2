@@ -31,16 +31,16 @@ class Incidents(Resource):
             return jsonify(resp)
 
         self.db.save_incident(created_by, typee, description, status, location)
-        return jsonify({
+        return {
             'Message': 'Record successfully saved!'
-        }, 201)
+        }, 201
 
     def get(self):
         result = self.db.get_all()
         if result == []:
-            return jsonify({
+            return {
                 'Message': 'Record not found!'
-            }, 404)
+            }, 404
         else:
             return jsonify(
                 {
@@ -57,14 +57,14 @@ class Incident(Resource):
     def delete(self, incident_id):
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if not self.db.find_by_id(incident_id):
-            return jsonify({
+            return {
                 'Message': 'The record you are trying to delete has not been found!'
-            })
+            }, 404
         if not userincidents:
             return jsonify(
                 {
                     'Message': 'You cannot delete an incident that does not belong to you!'
-                }
+                }, 401
             )
         self.db.delete(incident_id, get_jwt_identity())
         return {
@@ -74,9 +74,9 @@ class Incident(Resource):
     def get(self, incident_id):
         incident = self.db.find_by_id(incident_id)
         if incident == []:
-            return jsonify({
+            return {
                 'Message': 'Record not found!'
-            }, 404)
+            }, 404
         return jsonify({
             'Message': 'Record returned successfully',
             'Data': incident
@@ -94,13 +94,13 @@ class LocationUpdate(Resource):
         incident = self.db.find_by_id(incident_id)
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if not incident:
-            return jsonify({
+            return {
                 'Message': 'Record not found!'
-            }, 404)
+            }, 404
         if not userincidents:
-            return jsonify({
+            return {
                 'Message': 'You cannot update an incident that does not belong to you!'
-            })
+            }, 401
         self.db.updatelocation(location, incident_id, get_jwt_identity())
         return jsonify({
             'Message': 'Updated incident location successfully!',
@@ -119,18 +119,19 @@ class CommentUpdate(Resource):
         incident = self.db.find_by_id(incident_id)
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if not incident:
-            return jsonify({
+            return {
                 'Message': 'Record not found!'
-            }, 404)
+            }, 404
         if not userincidents:
-            return jsonify({
+            return {
                 'Message': 'You cannot update an incident that does not belong to you!'
-            })
+            }, 401
         self.db.updatecomment(comment, incident_id, get_jwt_identity())
         return jsonify({
             'Message': 'Updated incident comment successfully!',
             'data': incident
         }, 200)
+
 
 class Admin(Resource):
     def __init__(self):
@@ -141,10 +142,11 @@ class Admin(Resource):
         status = data['status']
         incident = self.db.find_by_id(incident_id)
         if not incident:
-            return jsonify({
-                'Message' : 'Record not found!'
-            }, 404)
+            return {
+                'Message': 'Record not found!'
+            }, 404
         self.db.updatestatus(status, incident_id)
         return jsonify({
-            'Message' : 'Updated incident status successfully!'
-        })
+            'Message': 'Updated incident status successfully!',
+            'data': incident
+        }, 200)
