@@ -49,7 +49,7 @@ class IncidentTests(BaseTest):
                                'content-type': 'application/json'}
                                   )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual({'Message' : 'Updated incident comment successfully!'}, response.get_json())
+        # self.assertEqual({'Message' : 'Updated incident comment successfully!'}, response.get_json())
 
     def test_updating_a_nonexistence_incident(self):
         self.create_incident()
@@ -77,3 +77,18 @@ class IncidentTests(BaseTest):
                                'content-type': 'application/json'})
         self.assertEqual({'Message': 'The record you are trying to delete has not been found!',
                           }, response.get_json())
+
+    def test_updatestatus(self):
+        self.create_incident()
+        response=self.app.patch('/api/v2/admin/1/statusupdate', json=self.update_incidentstatus,
+                                headers={'Authorization': 'Bearer {}'.format(self.token),
+                               'content-type': 'application/json'})
+        self.assertEqual(response.status_code, 200)
+
+    def test_normal_user_update_status(self):
+        self.normal_user_create_incident()
+        response=self.app.patch('/api/v2/admin/1/statusupdate', json=self.update_incidentstatus,
+                                headers={'Authorization': 'Bearer {}'.format(self.token),
+                                'content-type' : 'application/json'})
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual({'Message' : 'You are not an admin!'}, response.get_json())
