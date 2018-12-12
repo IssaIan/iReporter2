@@ -3,21 +3,22 @@ import os
 from psycopg2.extras import RealDictCursor
 from flask import current_app
 
+
 class Db:
     def __init__(self):
-    
-            self.db_host = current_app.config['DB_HOST']
-            self.db_username = current_app.config['DB_USER']
-            self.db_password = current_app.config['DB_PASSWORD']
-            self.db_name = current_app.config['DB_NAME']
 
-            self.connect = psycopg2.connect(
-                host=self.db_host,
-                user=self.db_username,
-                password=self.db_password,
-                database=self.db_name,
-            )
-            self.cursor = self.connect.cursor(cursor_factory=RealDictCursor)
+        self.db_host = current_app.config['DB_HOST']
+        self.db_username = current_app.config['DB_USER']
+        self.db_password = current_app.config['DB_PASSWORD']
+        self.db_name = current_app.config['DB_NAME']
+
+        self.connect = psycopg2.connect(
+            host=self.db_host,
+            user=self.db_username,
+            password=self.db_password,
+            database=self.db_name,
+        )
+        self.cursor = self.connect.cursor(cursor_factory=RealDictCursor)
 
     def init_app(self, app):
         self.connect = psycopg2.connect(
@@ -57,5 +58,3 @@ class Db:
     def destroy_tables(self, name):
         self.cursor.execute("DROP TABLE IF EXISTS " + name)
         self.connect.commit()
-
-    
