@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.api.v2.models.incidentmodels import IncidentModels
 from app.api.v2.models.usermodels import UserModels
 import datetime
+import smtplib
 
 
 class Incidents(Resource):
@@ -143,16 +144,31 @@ class Admin(Resource):
         data = request.get_json()
         status = data['status']
         incident = self.db.find_by_id(incident_id)
-        
+        email = self.db.get_user_email(incident_id)
+
         if not self.admin.isadmin(get_jwt_identity()):
             return{
-                'Message' : 'You are not an admin!'
+                'Message': 'You are not an admin!'
             }, 403
         if not incident:
             return {
                 'Message': 'Record not found!'
             }, 404
         self.db.updatestatus(status, incident_id)
+        try:
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login("issamwangi@gmail.com", "issamwangi")
+            msg = 'Your incident status has been changed to {}'.format(status)
+            server.sendmail("issamwangi@gmail.com", email, msg)
+            server.quit()
+        except:
+            return jsonify({
+                'Message': 'Notification email could not be sent.\
+                Check your internet status! Updated incident status successfully!',
+                'data': incident
+            }, 200)
+
         return jsonify({
             'Message': 'Updated incident status successfully!',
             'data': incident
