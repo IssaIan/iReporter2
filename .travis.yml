@@ -17,7 +17,7 @@ addons:
   postgres: "9.5"
   
 before_script:
-  - psql -c "CREATE DATABASE ireportertest" -U issa
+  - psql -c "CREATE DATABASE ireportertest;" -U issa
   - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to issa;" -U issa
 
 script:
