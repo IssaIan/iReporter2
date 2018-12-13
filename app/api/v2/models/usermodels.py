@@ -102,4 +102,4 @@ class UserModels(Db):
         self.save_user('issa', 'mwangi', 'admin', 'issaadmin@gmail.com', '0799123456', pas)
         self.promoteuser()
     
-            
+    
