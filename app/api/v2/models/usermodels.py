@@ -90,13 +90,16 @@ class UserModels(Db):
 
     def promoteuser(self):
         self.cursor.execute(
-            "UPDATE users SET is_admin='True' where username = 'admin'"
+            "UPDATE users SET is_admin='true' where username = 'admin'"
         )
         self.connect.commit()
     
     def create_admin(self):
-        try:
-            self.save_user('issa', 'mwangi', 'admin', 'issaadmin@gmail.com', '0799123456', 'adminuser')
-            self.promoteuser()
-        except: 
+        pas = generate_password_hash('adminuser')
+        
+        if self.get_user_name('admin'):
             return 'Admin already exists!'
+        self.save_user('issa', 'mwangi', 'admin', 'issaadmin@gmail.com', '0799123456', pas)
+        self.promoteuser()
+    
+            

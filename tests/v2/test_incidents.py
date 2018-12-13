@@ -81,7 +81,7 @@ class IncidentTests(BaseTest):
     def test_updatestatus(self):
         self.create_incident()
         response=self.app.patch('/api/v2/admin/1/statusupdate', json=self.update_incidentstatus,
-                                headers={'Authorization': 'Bearer {}'.format(self.token),
+                                headers={'Authorization': 'Bearer {}'.format(self.superadmintoken()),
                                'content-type': 'application/json'})
         self.assertEqual(response.status_code, 200)
 
