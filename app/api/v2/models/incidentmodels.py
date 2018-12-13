@@ -1,3 +1,4 @@
+import re
 import psycopg2
 from flask import jsonify, json
 from flask_restful import request
@@ -10,10 +11,10 @@ class IncidentModels(Db):
     def __init__(self):
         super().__init__()
 
-    def save_incident(self, created_by, typee, description, location):
+    def save_incident(self, created_by, typeofincident, description, location):
         self.cursor.execute(
             "INSERT INTO incidents(created_by, type, description, location)VALUES(%s, %s, %s, %s)",
-            (created_by, typee, description, location))
+            (created_by, typeofincident, description, location))
         self.connect.commit()
 
     def get_all(self):
@@ -75,3 +76,10 @@ class IncidentModels(Db):
         returneduser = self.cursor.fetchall()
         email = returneduser[0]['email']
         return email
+
+    def validate_comment(self, comment):
+        valid = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+        if(valid.search(comment) == None): 
+            return True 
+        else: 
+            return False 

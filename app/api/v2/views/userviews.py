@@ -1,5 +1,5 @@
 import psycopg2
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from flask import request, jsonify, make_response
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
@@ -7,25 +7,51 @@ import datetime
 from app.api.v2.models.usermodels import UserModels
 
 
+parser = reqparse.RequestParser()
+parser.add_argument("first_name", type=str, required=True,
+                    help="First name field is required")
+parser.add_argument("last_name", type=str, required=True,
+                    help="Last name field is required")
+parser.add_argument("username", type=str, required=True,
+                    help="Username field is required")
+parser.add_argument("email", type=str, required=True,
+                    help="Email field is required")
+parser.add_argument("password", type=str, required=True,
+                    help="Password field is required")
+parser.add_argument("confirm_password", type=str, required=True,
+                    help="Confirm password field is required")
+parser.add_argument("phonenumber", type=str, required=True,
+                    help="Phone Number field is required")
+
+parser2 = reqparse.RequestParser()
+parser2.add_argument('username', required=True,
+                     help='This field cannot be blank')
+parser2.add_argument('password', required=True,
+                     help='This field cannot be blank')
+
+
 class Users(Resource):
     def __init__(self):
         self.db = UserModels()
 
     def post(self):
-        data = request.get_json()
+        data = parser.parse_args()
         first_name = data['first_name'].strip()
         last_name = data['last_name'].strip()
         username = data['username'].lower().strip()
         email = data['email'].strip()
         phonenumber = data['phonenumber'].strip()
-        date_created = datetime.datetime.now()
         password = generate_password_hash(data['password'].strip())
-        confirm_password = data['confirm_password'].strip()
+        confirm_password = data['confirm_password']
 
+        passwordvalidation = self.db.password_validation(confirm_password)
         resp = None
-        if password.isspace() or len(password.strip()) < 8:
+        if password.isspace():
+            resp = {'Message': 'Please fill in a valid password!'}
+        if passwordvalidation == False:
             resp = {
-                'Message': 'Please fill in a valid password! Password must be 8 characters long!'}
+                'Message': 'Please fill in a valid password! Password must be 8 characters long.'
+            }
         if email.isspace() or not self.db.validate_email(email):
             resp = {'Message': 'Please enter a valid email!'}
         if first_name.isspace() or first_name == "":
@@ -52,8 +78,13 @@ class Users(Resource):
                           email, phonenumber, password)
         return {'Message': 'User saved successfully'}, 201
 
+    @jwt_required
     def get(self):
         result = self.db.get_all()
+        if not self.db.isadmin(get_jwt_identity()):
+            return{
+                'Message': 'You are not an admin!'
+            }, 403
         if result == []:
             return {
                 'Message': 'No user found!'
@@ -72,7 +103,7 @@ class Login(Resource):
         self.db = UserModels()
 
     def post(self):
-        data = request.get_json()
+        data = parser2.parse_args()
         username = data['username']
         password = data['password']
         user = self.db.get_user_name(username)

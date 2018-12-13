@@ -83,7 +83,8 @@ class UserModels(Db):
 
     def isadmin(self, userid):
         self.cursor.execute(
-            "SELECT * FROM users WHERE user_id = {} and is_admin = 'true'".format(userid)
+            "SELECT * FROM users WHERE user_id = {} and is_admin = 'true'".format(
+                userid)
         )
         user = self.cursor.fetchall()
         return user
@@ -93,13 +94,17 @@ class UserModels(Db):
             "UPDATE users SET is_admin='true' where username = 'admin'"
         )
         self.connect.commit()
-    
+
     def create_admin(self):
         pas = generate_password_hash('adminuser')
-        
+
         if self.get_user_name('admin'):
             return 'Admin already exists!'
-        self.save_user('issa', 'mwangi', 'admin', 'issaadmin@gmail.com', '0799123456', pas)
+        self.save_user('issa', 'mwangi', 'admin',
+                       'issaadmin@gmail.com', '0799123456', pas)
         self.promoteuser()
-    
-    
+
+    def password_validation(self, password):
+        if len(password) >= 8 and password.isalnum():
+            return True
+        return False
