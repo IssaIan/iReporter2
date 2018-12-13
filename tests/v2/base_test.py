@@ -3,17 +3,19 @@ import json
 from flask import current_app
 from app import create_app
 from db_config import Db
+from app.api.v2.models.usermodels import UserModels
 
 
 class BaseTest(TestCase):
     def setUp(self):
 
-        app = create_app("testing")
+        app = create_app(config_name="testing")
         self.app = app.test_client()
         self.app_context = app.app_context()
         self.app_context.push()
         Db().init_app(app)
         Db().create_tables()
+        UserModels().create_admin()
 
         self.test_user = {
             "first_name": "Issa",
@@ -101,14 +103,25 @@ class BaseTest(TestCase):
             "location": "Nairobi"
         }
 
-        self.adminlogin = {'username': self.test_user['username'],
+        self.userlogin = {'username': self.test_user['username'],
                            'password': self.test_user['password']}
+        
+        self.superadmin = {'username': 'admin',
+                            'password': 'adminuser'}
+
         self.loginnormaluser = {'username': self.test_user5['username'],
                                 'password': self.test_user5['password']}
 
+    def loginsuperadmin(self):
+        response = self.app.post('/api/v2/login',
+                                json=self.superadmin,
+                                headers = {'content-type' : 'application/json'}
+                                )
+        return response
+    
     def login(self):
         response = self.app.post('/api/v2/login',
-                                 json=self.adminlogin,
+                                 json=self.userlogin,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
@@ -162,7 +175,14 @@ class BaseTest(TestCase):
                                  )
         return response
 
-    def admin_token(self):
+    def superadmintoken(self):
+        self.resp = self.loginsuperadmin()
+        self.tok = json.loads(self.resp.data)
+        print(self.tok)
+        self.token = self.tok[0]['Token']
+        return self.token
+
+    def user1_token(self):
         self.registration()
         self.resp = self.login()
         self.tok = json.loads(self.resp.data)
@@ -177,7 +197,7 @@ class BaseTest(TestCase):
         return self.token
 
     def create_incident(self):
-        token = self.admin_token()
+        token = self.user1_token()
         response = self.app.post('/api/v2/incidents',
                                  json=self.test_incident,
                                  headers={'Authorization': 'Bearer {}'.format(token),
