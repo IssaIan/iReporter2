@@ -20,7 +20,6 @@ class Users(Resource):
         phonenumber = data['phonenumber'].strip()
         date_created = datetime.datetime.now()
         password = generate_password_hash(data['password'].strip())
-        is_admin = data['is_admin']
         confirm_password = data['confirm_password'].strip()
 
         resp = None
@@ -35,8 +34,6 @@ class Users(Resource):
             resp = {'Message': 'Please enter a last name!'}
         if username.isspace() or username == "":
             resp = {'Message': 'Please enter a username!'}
-        if is_admin != 'true' and is_admin != 'false': 
-            resp = {'Message' : 'Please enter true or false'}
 
         if resp is not None:
             return resp, 422
@@ -52,7 +49,7 @@ class Users(Resource):
             return {'Message': 'Please ensure that both passwords match!'}, 401
 
         self.db.save_user(first_name, last_name, username,
-                          email, phonenumber, password, is_admin)
+                          email, phonenumber, password)
         return {'Message': 'User saved successfully'}, 201
 
     def get(self):

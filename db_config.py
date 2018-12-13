@@ -27,6 +27,7 @@ class Db:
             password=app.config['DB_PASSWORD'],
             database=app.config['DB_NAME'],
         )
+        
         self.cursor = self.connect.cursor(cursor_factory=RealDictCursor)
 
     def create_tables(self):

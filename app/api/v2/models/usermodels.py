@@ -10,10 +10,10 @@ class UserModels(Db):
     def __init__(self):
         super().__init__()
 
-    def save_user(self, first_name, last_name, username, email, phonenumber, password, is_admin):
+    def save_user(self, first_name, last_name, username, email, phonenumber, password):
         self.cursor.execute(
-            "INSERT INTO users(first_name, last_name, username, email, phonenumber, password, is_admin)VALUES(%s, %s, %s, %s, %s, %s, %s)",
-            (first_name, last_name, username, email, phonenumber, password, is_admin))
+            "INSERT INTO users(first_name, last_name, username, email, phonenumber, password)VALUES(%s, %s, %s, %s, %s, %s)",
+            (first_name, last_name, username, email, phonenumber, password))
         self.connect.commit()
 
     def get_all(self):
@@ -87,3 +87,16 @@ class UserModels(Db):
         )
         user = self.cursor.fetchall()
         return user
+
+    def promoteuser(self):
+        self.cursor.execute(
+            "UPDATE users SET is_admin='True' where username = 'admin'"
+        )
+        self.connect.commit()
+    
+    def create_admin(self):
+        try:
+            self.save_user('issa', 'mwangi', 'admin', 'issaadmin@gmail.com', '0799123456', 'adminuser')
+            self.promoteuser()
+        except: 
+            return 'Admin already exists!'
