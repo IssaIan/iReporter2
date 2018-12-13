@@ -1,3 +1,2 @@
-web: gunicorn "app:create_app('debug')" 
-
+web: gunicorn run:app
 
