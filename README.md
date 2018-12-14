@@ -1,4 +1,5 @@
 # iReporter2
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b7374eb098e48c5a7d5c77bb123a6b1)](https://app.codacy.com/app/IssaIan/iReporter2?utm_source=github.com&utm_medium=referral&utm_content=IssaIan/iReporter2&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.org/IssaIan/iReporter2.svg?branch=develop)](https://travis-ci.org/IssaIan/iReporter2)
 [![Coverage Status](https://coveralls.io/repos/github/IssaIan/iReporter2/badge.svg?branch=develop)](https://coveralls.io/github/IssaIan/iReporter2?branch=develop)
 
