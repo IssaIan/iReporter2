@@ -5,11 +5,10 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    time = os.getenv('JWT_ACCESS_TOKEN_EXPIRES')
     DB_HOST = os.getenv('DB_HOST')
     DB_USER = os.getenv('DB_USER')
     DB_PASSWORD = os.getenv('DB_PASSWORD')
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=int(time))
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=12)
    
 
 class DevelopmentConfig(Config):

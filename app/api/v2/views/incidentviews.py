@@ -198,7 +198,7 @@ class Admin(Resource):
             }, 404
         self.db.updatestatus(status, incident_id)
         try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
             server.starttls()
             server.login("issamwangi@gmail.com", "issamwangi")
             msg = 'Your incident status has been changed to {}'.format(status)
