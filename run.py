@@ -3,6 +3,7 @@ from flask import jsonify, request
 from db_config import Db
 from app.api.v2.models.usermodels import UserModels
 from app import create_app
+from flask_jwt_extended.exceptions import NoAuthorizationError
 
 app = create_app(os.getenv('FLASK_CONFIG'))
 
@@ -41,6 +42,14 @@ def server_error(error=None):
     """Handle internal server error for an endpoint """
     return jsonify({
         'Message': 'Verify if the request causes a server error'}), 500
+
+@app.errorhandler(NoAuthorizationError)
+def no_authorization(error=None):
+        """Handle no authorization error"""
+        return jsonify({
+                'Message' : 'You are not logged in!'
+        }), 401
+
 
 
 if __name__ == '__main__':
