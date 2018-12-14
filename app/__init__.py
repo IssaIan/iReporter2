@@ -5,11 +5,12 @@ from instance.config import Config
 import datetime
 from flask import Flask, Blueprint, request, jsonify
 from instance.config import app_config
-from app.api.v2 import version_two as v2
+from app.api.v2.routes import version_two as v2
 from db_config import Db
+from flask import jsonify
 
 
-timeout = datetime.timedelta(hours = 12)
+timeout = datetime.timedelta(hours=12)
 
 
 def create_app(config_name):
@@ -31,7 +32,7 @@ def create_app(config_name):
     @app.errorhandler(405)
     def wrong_method(error=None):
         """Handle wrong methods for an endpoint """
-        request_method = request.method
+        request_method=request.method
         return jsonify({
             'Message': 'The {} method is not allowed for this endpoint'
             .format(request_method)}), 405
@@ -47,5 +48,7 @@ def create_app(config_name):
         """Handle internal server error for an endpoint """
         return jsonify({
             'Message': 'Verify if the request causes a server error'}), 500
+
+
 
     return app

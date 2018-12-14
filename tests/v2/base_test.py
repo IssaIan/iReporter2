@@ -24,8 +24,7 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "issamwangi@gmail.com",
-            "is_admin": "true"
+            "email": "issamwangi@gmail.com"
         }
 
         self.test_user2 = {
@@ -36,7 +35,6 @@ class BaseTest(TestCase):
             "confirm_password": "Mwnjina9171",
             "phonenumber": "0722496986",
             "email": "njokimwangi@gmail.com"
-            
         }
 
         self.test_user3 = {
@@ -46,7 +44,7 @@ class BaseTest(TestCase):
             "password": "Maina9176",
             "confirm_password": "Maina9176",
             "phonenumber": "0722496986",
-            "email": "kennmwangi@gmail.com"    
+            "email": "kennmwangi@gmail.com"
         }
 
         self.test_user4 = {
@@ -77,58 +75,59 @@ class BaseTest(TestCase):
             "phonenumber": "0722496986",
             "email": "issamwangi22@gmail.com"
         }
+        self.test_user7 = {
+            "first_name": "taby",
+            "last_name": "Mwangi",
+            "username": "issa22",
+            "password": "Mai",
+            "confirm_password": "Mai",
+            "phonenumber": "0722496986",
+            "email": "issamwangi22@gmail.com"
+        }
+
 
         self.test_incident = {
-            "typee": "redflag",
+            "typeofincident": "redflag",
             "description": "Corruption cases in Nairobi district",
-            "status": "Draft",
             "location": "Nairobi"
         }
         self.update_incidentlocation = {
-            "typee": "redflag",
+            "typeofincident": "redflag",
             "description": "Corruption cases in Nairobi district",
-            "status": "Draft",
             "location": "Nyeri"
         }
         self.update_incidentcomment = {
-            "typee": "redflag",
+            "typeofincident": "redflag",
             "description": "Police brutality at the CBD",
-            "status": "Draft",
             "location": "Nairobi"
         }
         self.update_incidentstatus = {
-            "typee": "redflag",
+            "typeofincident": "redflag",
             "description": "Police brutality at the CBD",
             "status": "Under-investigation",
             "location": "Nairobi"
         }
 
         self.userlogin = {'username': self.test_user['username'],
-                           'password': self.test_user['password']}
-        
+                          'password': self.test_user['password']}
+
         self.superadmin = {'username': 'admin',
-                            'password': 'adminuser'}
+                           'password': 'adminuser'}
 
         self.loginnormaluser = {'username': self.test_user5['username'],
                                 'password': self.test_user5['password']}
 
+    
     def loginsuperadmin(self):
         response = self.app.post('/api/v2/login',
-                                json=self.superadmin,
-                                headers = {'content-type' : 'application/json'}
-                                )
-        return response
-    
-    def login(self):
-        response = self.app.post('/api/v2/login',
-                                 json=self.userlogin,
+                                 json=self.superadmin,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
-    def loginuser(self):
+    def login(self):
         response = self.app.post('/api/v2/login',
-                                 json=self.loginnormaluser,
+                                 json=self.userlogin,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
@@ -154,6 +153,13 @@ class BaseTest(TestCase):
                                  )
         return response
 
+    def loginuser(self):
+        response = self.app.post('/api/v2/login',
+                                 json=self.loginnormaluser,
+                                 headers={'content-type': 'application/json'}
+                                 )
+        return response
+
     def wrongpasswordregistration(self):
         response = self.app.post('/api/v2/users',
                                  json=self.test_user2,
@@ -175,10 +181,16 @@ class BaseTest(TestCase):
                                  )
         return response
 
+    def invalidpasswordregistration(self):
+        response = self.app.post('/api/v2/users',
+                                json=self.test_user7,
+                                headers={'content-type': 'application/json'}
+                                )
+        return response
+
     def superadmintoken(self):
         self.resp = self.loginsuperadmin()
         self.tok = json.loads(self.resp.data)
-        print(self.tok)
         self.token = self.tok[0]['Token']
         return self.token
 
@@ -186,7 +198,9 @@ class BaseTest(TestCase):
         self.registration()
         self.resp = self.login()
         self.tok = json.loads(self.resp.data)
+        print(self.tok)
         self.token = self.tok[0]['Token']
+        print(self.token)
         return self.token
 
     def user_token(self):
@@ -201,7 +215,7 @@ class BaseTest(TestCase):
         response = self.app.post('/api/v2/incidents',
                                  json=self.test_incident,
                                  headers={'Authorization': 'Bearer {}'.format(token),
-                                          'content_type': 'application/json'}
+                                          'content-type': 'application/json'}
                                  )
         return response
 
@@ -210,7 +224,7 @@ class BaseTest(TestCase):
         response = self.app.post('/api/v2/incidents',
                                  json=self.test_incident,
                                  headers={'Authorization': 'Bearer {}'.format(token),
-                                          'content_type': 'application/json'}
+                                          'content-type': 'application/json'}
                                  )
         return response
 
