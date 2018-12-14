@@ -31,6 +31,8 @@ parser2.add_argument('password', required=True,
 
 
 class Users(Resource):
+    """Handles user registration activity"""
+
     def __init__(self):
         self.db = UserModels()
 
@@ -102,6 +104,8 @@ class Users(Resource):
 
 
 class Login(Resource):
+    """ Handles user login activity"""
+
     def __init__(self):
         self.db = UserModels()
 

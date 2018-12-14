@@ -7,6 +7,9 @@ from db_config import Db
 
 
 class UserModels(Db):
+    """ Handles interaction with the users table in the database.
+    Contains queries to interact with the users table in the database"""
+
     def __init__(self):
         super().__init__()
 

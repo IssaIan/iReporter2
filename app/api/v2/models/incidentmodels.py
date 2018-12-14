@@ -7,6 +7,8 @@ from db_config import Db
 
 
 class IncidentModels(Db):
+    """Handles interaction with the incidents tables in the database
+    Queries that interact with the incident table in the database are contained here"""
 
     def __init__(self):
         super().__init__()
@@ -79,7 +81,7 @@ class IncidentModels(Db):
 
     def validate_comment(self, comment):
         valid = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
-        if(valid.search(comment) == None): 
-            return True 
-        else: 
-            return False 
+        if(valid.search(comment) == None):
+            return True
+        else:
+            return False
