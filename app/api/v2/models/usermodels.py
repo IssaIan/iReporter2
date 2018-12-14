@@ -108,3 +108,10 @@ class UserModels(Db):
         if len(password) >= 8 and password.isalnum():
             return True
         return False
+
+    def checknumber(self, phonenumber):
+        self.cursor.execute(
+            "SELECT * FROM users where phonenumber = {}".format(phonenumber)
+        )
+        user = self.cursor.fetchall()
+        return user

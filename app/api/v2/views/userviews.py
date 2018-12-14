@@ -66,11 +66,14 @@ class Users(Resource):
 
         user = self.db.get_user_name(username)
         emailconfirm = self.db.get_email(email)
+        phonumber = self.db.checknumber(phonenumber)
 
         if user:
             return {'Message': 'Username already exists!'}, 401
         if emailconfirm:
             return {'Message': 'Email already exists!'}, 401
+        if phonumber:
+            return {'Message': 'Phone Number already exists!'}, 401
         if not self.db.confirmpassword(password, confirm_password):
             return {'Message': 'Please ensure that both passwords match!'}, 401
 
@@ -104,7 +107,7 @@ class Login(Resource):
 
     def post(self):
         data = parser2.parse_args()
-        username = data['username']
+        username = data['username'].lower()
         password = data['password']
         user = self.db.get_user_name(username)
 
