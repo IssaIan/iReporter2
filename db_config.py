@@ -44,7 +44,7 @@ class Db:
         )"""
         incidents = """CREATE TABLE IF NOT EXISTS incidents (
             incident_id serial PRIMARY KEY NOT NULL,
-            created_by integer references users (user_id),
+            created_by integer NOT NULL references users (user_id),
             type character varying(20) NOT NULL,
             description character varying (200) NOT NULL,
             status character varying(20) DEFAULT 'DRAFT',
