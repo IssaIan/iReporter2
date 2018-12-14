@@ -7,6 +7,9 @@ from db_config import Db
 
 
 class UserModels(Db):
+    """ Handles interaction with the users table in the database.
+    Contains queries to interact with the users table in the database"""
+
     def __init__(self):
         super().__init__()
 
@@ -108,3 +111,10 @@ class UserModels(Db):
         if len(password) >= 8 and password.isalnum():
             return True
         return False
+
+    def checknumber(self, phonenumber):
+        self.cursor.execute(
+            "SELECT * FROM users where phonenumber = {}".format(phonenumber)
+        )
+        user = self.cursor.fetchall()
+        return user

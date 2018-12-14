@@ -27,6 +27,9 @@ parser4.add_argument(
 
 
 class Incidents(Resource):
+    """Handles creation of new incidents in the system by the users
+    Also handles getting of all incidents in the database"""
+
     def __init__(self):
         self.db = IncidentModels()
 
@@ -74,6 +77,8 @@ class Incidents(Resource):
 
 
 class Incident(Resource):
+    """Handles deleting and finding an incident using its id."""
+
     def __init__(self):
         self.db = IncidentModels()
 
@@ -119,6 +124,8 @@ class Incident(Resource):
 
 
 class LocationUpdate(Resource):
+    """Handles incident location update by users in the system"""
+
     def __init__(self):
         self.db = IncidentModels()
 
@@ -148,6 +155,8 @@ class LocationUpdate(Resource):
 
 
 class CommentUpdate(Resource):
+    """Handles incident comment updates by users in the system"""
+
     def __init__(self):
         self.db = IncidentModels()
 
@@ -177,6 +186,10 @@ class CommentUpdate(Resource):
 
 
 class Admin(Resource):
+    """Handles admin user functionality. Allows the admin user to 
+    update incident status. A real time email notification is sent to the user
+    once the update is successful"""
+
     def __init__(self):
         self.db = IncidentModels()
         self.admin = UserModels()
