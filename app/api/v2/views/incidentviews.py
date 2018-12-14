@@ -199,7 +199,7 @@ class Admin(Resource):
         self.db.updatestatus(status, incident_id)
         try:
             server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-            server.starttls()
+            server.ehlo()
             server.login("issamwangi@gmail.com", "issamwangi")
             msg = 'Your incident status has been changed to {}'.format(status)
             server.sendmail("issamwangi@gmail.com", email, msg)
