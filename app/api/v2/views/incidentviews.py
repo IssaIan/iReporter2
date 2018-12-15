@@ -93,6 +93,10 @@ class Incident(Resource):
                     'Message': 'You cannot delete an incident that does not belong to you!'
                 }, 401
             )
+        if userincidents[0]['status'] != 'DRAFT':
+            return {
+                'Message' : 'Incident status already changed. You cannot delete this incident!'
+            }, 403
         self.db.delete(incident_id, get_jwt_identity())
         return {
             'Message': 'Record successfully deleted!',
@@ -137,6 +141,10 @@ class LocationUpdate(Resource):
             return {
                 'Message': 'Record not found!'
             }, 404
+        if incident[0]['status'] != 'DRAFT':
+            return {
+                'Message' : 'Incident status already changed. You cannot update this incident!'
+            }, 403
         if not userincidents:
             return {
                 'Message': 'You cannot update an incident that does not belong to you!'
@@ -168,6 +176,10 @@ class CommentUpdate(Resource):
             return {
                 'Message': 'Record not found!'
             }, 404
+        if incident[0]['status'] != 'DRAFT':
+            return {
+                'Message' : 'Incident status already changed. You cannot update this incident!'
+            }, 403
         if not userincidents:
             return {
                 'Message': 'You cannot update an incident that does not belong to you!'
