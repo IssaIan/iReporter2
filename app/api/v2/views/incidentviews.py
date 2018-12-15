@@ -1,8 +1,6 @@
-import datetime
 import smtplib
-import psycopg2
 from flask_restful import Resource, reqparse
-from flask import jsonify, request
+from flask import jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.api.v2.models.incidentmodels import IncidentModels
 from app.api.v2.models.usermodels import UserModels

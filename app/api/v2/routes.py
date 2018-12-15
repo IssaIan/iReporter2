@@ -1,4 +1,4 @@
-from flask_restful import Api, Resource
+from flask_restful import Api
 from flask import Blueprint
 from app.api.v2.views.incidentviews import Admin, Incidents, Incident, LocationUpdate, CommentUpdate
 from app.api.v2.views.userviews import Users, Login 

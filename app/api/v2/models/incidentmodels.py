@@ -1,8 +1,4 @@
 import re
-import psycopg2
-from flask import jsonify, json
-from flask_restful import request
-from psycopg2.extras import RealDictCursor
 from db_config import Db
 
 
