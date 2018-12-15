@@ -184,7 +184,7 @@ class CommentUpdate(Resource):
 
 
 class Admin(Resource):
-    """Handles admin user functionality. Allows the admin user to 
+    """Handles admin user functionality. Allows the admin user to
     update incident status. A real time email notification is sent to the user
     once the update is successful"""
 

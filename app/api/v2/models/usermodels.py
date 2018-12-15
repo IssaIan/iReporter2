@@ -51,8 +51,8 @@ class UserModels(Db):
             "SELECT user_id FROM users WHERE username='{}'".format(username))
         user_id = self.cursor.fetchone()
         if user_id:
-            id = user_id.get('user_id')
-            return id
+            incident_id = user_id.get('user_id')
+            return incident_id
         else:
             return None
 
