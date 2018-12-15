@@ -40,7 +40,7 @@ class Db:
             phonenumber int,
             password character varying(150) NOT NULL,
             is_admin BOOLEAN DEFAULT FALSE
-        )"""
+            )"""
         incidents = """CREATE TABLE IF NOT EXISTS incidents (
             incident_id serial PRIMARY KEY NOT NULL,
             created_by integer NOT NULL references users (user_id),

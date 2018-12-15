@@ -20,43 +20,43 @@ class IncidentModels(Db):
         incidentlist = self.cursor.fetchall()
         return incidentlist
 
-    def find_by_id(self, id):
+    def find_by_id(self, incident_id):
         self.cursor.execute(
-            "SELECT * FROM incidents WHERE incident_id = {}".format(id))
+            "SELECT * FROM incidents WHERE incident_id = {}".format(incident_id))
         incident = self.cursor.fetchall()
         return incident
 
-    def delete(self, id, user_id):
-        self.find_by_id(id)
+    def delete(self, incident_id, user_id):
+        self.find_by_id(incident_id)
         self.cursor.execute(
-            "DELETE FROM incidents WHERE incident_id = {} and created_by = {}".format(id, user_id))
+            "DELETE FROM incidents WHERE incident_id = {} and created_by = {}".format(incident_id, user_id))
         self.connect.commit()
 
-    def updatelocation(self, location, id, user_id):
+    def updatelocation(self, location, incident_id, user_id):
         self.cursor.execute(
             "UPDATE incidents SET location = '{}' WHERE incident_id = {} and created_by = {}".format(
-                location, id, user_id)
+                location, incident_id, user_id)
         )
         self.connect.commit()
 
-    def updatecomment(self, comment, id, user_id):
+    def updatecomment(self, comment, incident_id, user_id):
         self.cursor.execute(
             "UPDATE incidents SET description = '{}' WHERE incident_id = {} and created_by = {}".format(
-                comment, id, user_id)
+                comment, incident_id, user_id)
         )
         self.connect.commit()
 
-    def get_by_user_id(self, id):
+    def get_by_user_id(self, incident_id):
         self.cursor.execute(
-            "SELECT * FROM incidents WHERE created_by = {}".format(id)
+            "SELECT * FROM incidents WHERE created_by = {}".format(incident_id)
         )
         incident = self.cursor.fetchall()
         return incident
 
-    def updatestatus(self, status, id):
+    def updatestatus(self, status, incident_id):
         self.cursor.execute(
             "UPDATE incidents SET status = '{}' WHERE incident_id = {}".format(
-                status, id)
+                status, incident_id)
         )
         self.connect.commit()
 
@@ -89,9 +89,10 @@ class IncidentModels(Db):
         incidents = self.cursor.fetchall()
         return incidents
 
-    def get_from_type_by_id(self, incidenttype, id):
+    def get_from_type_by_id(self, incidenttype, incident_id):
         self.cursor.execute(
-            "SELECT * FROM incidents WHERE type = '{}' and incident_id = {}".format(incidenttype, id)
+            "SELECT * FROM incidents WHERE type = '{}' and incident_id = {}".format(
+                incidenttype, incident_id)
         )
         incidents = self.cursor.fetchall()
         return incidents

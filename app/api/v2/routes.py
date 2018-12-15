@@ -1,8 +1,7 @@
 from flask_restful import Api
 from flask import Blueprint
 from app.api.v2.views.incidentviews import Admin, Incidents, Incident, LocationUpdate, CommentUpdate
-from app.api.v2.views.userviews import Users, Login 
-
+from app.api.v2.views.userviews import Users, Login
 version_two = Blueprint('api_v2', __name__, url_prefix='/api/v2')
 
 api = Api(version_two)
