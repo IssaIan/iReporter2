@@ -83,9 +83,9 @@ class Incident(Resource):
         self.db = IncidentModels()
 
     @jwt_required
-    def delete(self, incident_id):
+    def delete(self, incidenttype, incident_id):
         userincidents = self.db.get_by_user_id(get_jwt_identity())
-        if not self.db.find_by_id(incident_id):
+        if not self.db.get_from_type_by_id(incidenttype, incident_id):
             return {
                 'Message': 'The record you are trying to delete has not been found!'
             }, 404
@@ -106,8 +106,8 @@ class Incident(Resource):
         }, 200
 
     @jwt_required
-    def get(self, incident_id):
-        incident = self.db.find_by_id(incident_id)
+    def get(self, incidenttype, incident_id):
+        incident = self.db.get_from_type_by_id(incidenttype, incident_id)
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if incident == []:
             return {
@@ -130,10 +130,10 @@ class LocationUpdate(Resource):
         self.db = IncidentModels()
 
     @jwt_required
-    def patch(self, incident_id):
+    def patch(self, incidenttype, incident_id):
         data = parser2.parse_args()
         location = data['location']
-        incident = self.db.find_by_id(incident_id)
+        incident = self.db.get_from_type_by_id(incidenttype, incident_id)
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if not incident:
             return {
@@ -145,7 +145,7 @@ class LocationUpdate(Resource):
             }, 401
         self.db.updatelocation(location, incident_id, get_jwt_identity())
         return jsonify({
-            'Message': 'Updated incident location successfully!',
+            'Message': 'Updated {} location successfully!'.format(incidenttype),
             'data': [
                 {
                     "id": incident_id
@@ -161,10 +161,10 @@ class CommentUpdate(Resource):
         self.db = IncidentModels()
 
     @jwt_required
-    def patch(self, incident_id):
+    def patch(self, incidenttype, incident_id):
         data = parser3.parse_args()
         comment = data['description']
-        incident = self.db.find_by_id(incident_id)
+        incident = self.db.get_from_type_by_id(incidenttype, incident_id)
         userincidents = self.db.get_by_user_id(get_jwt_identity())
         if not incident:
             return {
@@ -176,7 +176,7 @@ class CommentUpdate(Resource):
             }, 401
         self.db.updatecomment(comment, incident_id, get_jwt_identity())
         return jsonify({
-            'Message': 'Updated incident comment successfully!',
+            'Message': 'Updated {} comment successfully!'.format(incidenttype),
             'data': [
                 {
                     "id": incident_id
@@ -195,10 +195,10 @@ class Admin(Resource):
         self.admin = UserModels()
 
     @jwt_required
-    def patch(self, incident_id):
+    def patch(self, incidenttype, incident_id):
         data = parser4.parse_args()
         status = data['status']
-        incident = self.db.find_by_id(incident_id)
+        incident = self.db.get_from_type_by_id(incidenttype, incident_id)
         email = self.db.get_user_email(incident_id)
 
         if not self.admin.isadmin(get_jwt_identity()):

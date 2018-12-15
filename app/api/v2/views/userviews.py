@@ -130,7 +130,7 @@ class Login(Resource):
         login_token = self.db.user_login(username)
         if login_token:
             return jsonify({
-                'Message': 'You are now logged in!',
+                'Message': 'Welcome {}. You are now logged in!'.format(username),
                 'Token': login_token,
                 'User': user
             }, 200)
