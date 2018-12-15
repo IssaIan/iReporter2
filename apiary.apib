@@ -1,0 +1,241 @@
+FORMAT: 1A
+HOST: https://issaireporterv2.herokuapp.com/
+
+
+# iReporter
+
+iReporter enables any/every citizen to bring any form of corruption to the 
+notice of appropriate authorities and the general public. Users can also report on things that needs government intervention
+
+
+## User Registration [/auth/signup]
+
+### Register a user [POST]
+
+You can create a user by sending a json request with firstname, lastname, username, 
+email, phonenumber and password. The
+password must be eight characters or more.
+
++ Request (application/json)
+
+        {
+            "first_name": "Issa",
+            "last_name": "Mwangi",
+            "username" : "Theonly"
+            "email": "alphanganga@gmail.com",
+            "username": "alpha",
+            "password": "Maina9176",
+            "confirm_password": "Maina9176"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "Message": "User saved successfully!"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "Message": "Username already exists!"
+        }
+
+## User Login [/auth/login]
+
+### Login [POST]
+
+You can login a user by sending their email and password. Please take note
+of the auth token for you will need it for all user requests.
+
++ Request (application/json)
+
+        {
+            "username": "theonly",
+            "password": "Maina9176"
+        }
+
++ Response 201 (application/json)
+
+        
+            {
+                "Message": "You are now logged in!",
+                "Token": login_token,
+                "user": user
+            }
+        
+        
+
++ Response 400 (application/json)
+
+        
+        
+            {
+                "Message": "No user with that username found!"
+            }
+        
+        
+
+
+## Incident [/incidents]
+
+### Create a new incident [POST]
+
+A logged in user can create an incident record
+
++ Request (application/json)
+
+        {
+            "typeofincident" : "redflag",
+            "description" : "corruption",
+            "location" : "Nairobi"
+        }
+
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+
+            {
+                "Message": "Record successfully saved!"
+            }
++ Response 401 (application/json)
+
+    + Body
+
+            {
+                "Message": "You are not logged in!"
+            }
+### Get all incident [GET]
+
+You can Get all incident records. 
+You don't have to be logged in. 
+
++ Response 202 (application/json)
+
+
+    + Body
+
+            [
+                {
+                    "Data": [
+                        {
+                            "created_by": 7,
+                            "created_on": "Fri, 14 Dec 2018 21:00:00 GMT",
+                            "description": "Mombasa",
+                            "incident_id": 3,
+                            "location": "Mombasa",
+                            "status": "DRAFT",
+                            "type": "redflag"
+                        }
+                    ],
+                "Message": "Record returned successfully"
+                },
+                200
+            ]
+
+## Specific intervention or red-flag record [/redflag/1]
+
+### Get a specific Incident [GET]
+
+You can get a specific intervention or red-flag record using its id
+You must be loged in to get the jwt-token.
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+
+            [
+                {
+                    "Data": [
+                        {
+                            "created_by": 7,
+                            "created_on": "Fri, 14 Dec 2018 21:00:00 GMT",
+                            "description": "Mombasa",
+                            "incident_id": 3,
+                            "location": "Mombasa",
+                            "status": "DRAFT",
+                            "type": "redflag"
+                        }
+                    ],
+                "Message": "Record returned successfully"
+                },
+                200
+            ]
++ Response 404 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+
+            {
+                "Message": "Record not found!"
+            }
+            
+### Delete a specific incident [DELETE]
+
+You can delete a specific incident records from the database. 
+You must be loged in. User can only delete their own record.
+**Warning:** This action is **permanent!**
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+
+            {
+                "Message": "Record successfully deleted!",
+                "data": [
+                    {
+                        "id": 3
+                    }
+                ]
+            }
++ Response 404 ()
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+
+            {
+                "Message": "The record you are trying to delete has not been found!"
+            }
+            
+## Specific record update [/redflag/1/location]
+### Patch redflag location [PATCH]
+You can up update the location of a record. You must be logged in. A user can only
+update his/her own record
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Authorization: Bearer Token
+
+    + Body
+    
+            [
+                {
+                    "Message": "Updated redflag comment successfully!",
+                    "data": [
+                        {
+                            "id": 3
+                        }
+                    ]
+                },
+                200
+            ]
