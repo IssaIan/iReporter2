@@ -119,70 +119,70 @@ class BaseTest(TestCase):
 
     
     def loginsuperadmin(self):
-        response = self.app.post('/api/v2/login',
+        response = self.app.post('/api/v2/auth/login',
                                  json=self.superadmin,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def login(self):
-        response = self.app.post('/api/v2/login',
+        response = self.app.post('/api/v2/auth/login',
                                  json=self.userlogin,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def registration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def registerwithoutfirstname(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user6,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def userregistration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user5,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def loginuser(self):
-        response = self.app.post('/api/v2/login',
+        response = self.app.post('/api/v2/auth/login',
                                  json=self.loginnormaluser,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def wrongpasswordregistration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user2,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def existingusernameregistration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user4,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def existingemailregistration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                  json=self.test_user5,
                                  headers={'content-type': 'application/json'}
                                  )
         return response
 
     def invalidpasswordregistration(self):
-        response = self.app.post('/api/v2/users',
+        response = self.app.post('/api/v2/auth/signup',
                                 json=self.test_user7,
                                 headers={'content-type': 'application/json'}
                                 )
@@ -198,9 +198,7 @@ class BaseTest(TestCase):
         self.registration()
         self.resp = self.login()
         self.tok = json.loads(self.resp.data)
-        print(self.tok)
         self.token = self.tok[0]['Token']
-        print(self.token)
         return self.token
 
     def user_token(self):
