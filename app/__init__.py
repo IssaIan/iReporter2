@@ -15,8 +15,6 @@ def create_app(config_name):
     app.register_blueprint(v2)
     app.url_map.strict_slashes = False
     app.config.from_object(app_config[config_name])
-    app.config['JWT_SECRET_KEY']
-    app.config['JWT_ACCESS_TOKEN_EXPIRES']
     JWTManager(app)
 
     return app

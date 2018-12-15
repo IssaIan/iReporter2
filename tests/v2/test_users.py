@@ -58,7 +58,7 @@ class UsersTest(BaseTest):
                                 headers={'Authorization': 'Bearer {}'.format(self.superadmintoken()),
                                          'content-type': 'application/json'})
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Records returned successfully!')
+        self.assertEqual(result[0]['Message'], 'Records returned successfully!')
         self.assertEqual(response.status_code, 200)
 
     def test_firstnamemissing(self):

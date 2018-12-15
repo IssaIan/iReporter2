@@ -1,8 +1,6 @@
-import psycopg2
 import re
-from flask_restful import request
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_jwt_extended import get_jwt_identity, create_access_token
+from flask_jwt_extended import create_access_token
 from db_config import Db
 
 

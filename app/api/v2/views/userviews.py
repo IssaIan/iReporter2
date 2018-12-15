@@ -1,9 +1,7 @@
-import psycopg2
 from flask_restful import Resource, reqparse
-from flask import request, jsonify, make_response
+from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash
-import datetime
 from app.api.v2.models.usermodels import UserModels
 
 
@@ -95,12 +93,12 @@ class Users(Resource):
                 'Message': 'No user found!'
             }, 404
         else:
-            return make_response(jsonify(
+            return jsonify(
                 {
                     'Message': 'Records returned successfully!',
                     'Data': result
                 }
-            ), 200)
+            , 200)
 
 
 class Login(Resource):
