@@ -14,7 +14,7 @@ class UsersTest(BaseTest):
         self.registration()
         response = self.login()
         result = json.loads(response.data)
-        self.assertEqual(result[0]['Message'], 'You are now logged in!')
+        self.assertEqual(result[0]['Message'], 'Welcome issa. You are now logged in!')
         self.assertEqual(response.status_code, 200)
 
     def test_login_unregistered_user(self):
@@ -54,7 +54,7 @@ class UsersTest(BaseTest):
 
     def test_getallusers(self):
         self.registration()
-        response = self.app.get('/api/v2/users',
+        response = self.app.get('/api/v2/auth/signup',
                                 headers={'Authorization': 'Bearer {}'.format(self.superadmintoken()),
                                          'content-type': 'application/json'})
         result = json.loads(response.data)
