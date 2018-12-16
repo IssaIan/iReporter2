@@ -84,18 +84,17 @@ A logged in user can create an incident record
 
 + Request (application/json)
 
-        {
-            "typeofincident" : "redflag",
-            "description" : "corruption",
-            "location" : "Nairobi"
-        }
+    + Headers
+            Authorization: Bearer Token
+
+            {
+                "typeofincident" : "redflag",
+                "description" : "corruption",
+                "location" : "Nairobi"
+            }
 
 
 + Response 201 (application/json)
-
-    + Headers
-
-            Authorization: Bearer Token
 
     + Body
 
