@@ -85,7 +85,10 @@ A logged in user can create an incident record
 + Request (application/json)
 
     + Headers
+    
             Authorization: Bearer Token
+            
+    + Body
 
             {
                 "typeofincident" : "redflag",
@@ -101,6 +104,7 @@ A logged in user can create an incident record
             {
                 "Message": "Record successfully saved!"
             }
+            
 + Response 401 (application/json)
 
     + Body
@@ -108,6 +112,7 @@ A logged in user can create an incident record
             {
                 "Message": "You are not logged in!"
             }
+            
 ### Get all incident [GET]
 
 You can Get all incident records. 
@@ -219,6 +224,19 @@ You must be loged in. User can only delete their own record.
 You can up update the location of a record. You must be logged in. A user can only
 update his/her own record
 
++ Request (application/json)
+    
+    + Headers 
+            
+            Authorization: Bearer Token
+            
+    + Body
+            
+            {
+                "location": "Nairobi"
+            }
+            
+
 + Response 200 (application/json)
 
     + Headers
@@ -229,10 +247,49 @@ update his/her own record
     
             [
                 {
-                    "Message": "Updated redflag comment successfully!",
+                    "Message": "Updated redflag location successfully!",
                     "data": [
                         {
                             "id": 3
+                        }
+                    ]
+                },
+                200
+            ]
+            
+            
+## Admin record status update [/admin/redflag/1/statusupdate]
+
+### Patch a redflag status [PATCH]
+An admin user can update the status of an incident. 
+A real-time notification email will be received by the user regarding the change.
+
++ Request (application/json)
+
+    + Headers 
+            
+            Authorization: Bearer Token
+            
+    + Body 
+            
+            {
+                "status": "Rejected"
+            }
+            
++ Response 200 (application/json)
+    
+    + Headers
+    
+             Authorization: Bearer Token
+             
+    + Body 
+            
+            [
+                {
+                    "Message": "Updated incident status successfully!",
+                    "data": [
+                        {
+                            "id": 2
                         }
                     ]
                 },
