@@ -6,27 +6,12 @@ from flask import current_app
 class Db:
     def __init__(self):
 
-        self.db_host = current_app.config['DB_HOST']
-        self.db_username = current_app.config['DB_USER']
-        self.db_password = current_app.config['DB_PASSWORD']
-        self.db_name = current_app.config['DB_NAME']
-
-        self.connect = psycopg2.connect(
-            host=self.db_host,
-            user=self.db_username,
-            password=self.db_password,
-            database=self.db_name,
-        )
+        self.database_url = current_app.config['DATABASE_URL']
+        self.connect = psycopg2.connect(self.database_url)
         self.cursor = self.connect.cursor(cursor_factory=RealDictCursor)
 
     def init_app(self, app):
-        self.connect = psycopg2.connect(
-            host=app.config['DB_HOST'],
-            user=app.config['DB_USER'],
-            password=app.config['DB_PASSWORD'],
-            database=app.config['DB_NAME'],
-        )
-        
+        self.connect = psycopg2.connect(app.config['DATABASE_URL'])
         self.cursor = self.connect.cursor(cursor_factory=RealDictCursor)
 
     def create_tables(self):
