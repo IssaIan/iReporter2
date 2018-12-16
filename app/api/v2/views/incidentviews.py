@@ -47,7 +47,7 @@ class Incidents(Resource):
             resp = {'Message': 'Type cannot be empty!'}
         if description.isspace() or description == "":
             resp = {'Message': 'Description cannot be empty!'}
-        if location.isspace() or description == "":
+        if location.isspace() or location == "":
             resp = {'Message': 'Location cannot be empty!'}
         if resp is not None:
             return jsonify(resp)
@@ -88,14 +88,12 @@ class Incident(Resource):
                 'Message': 'The record you are trying to delete has not been found!'
             }, 404
         if not userincidents:
-            return jsonify(
-                {
-                    'Message': 'You cannot delete an incident that does not belong to you!'
-                }, 401
-            )
+            return{
+                'Message': 'You cannot delete an incident that does not belong to you!'
+            }, 401
         if userincidents[0]['status'] != 'DRAFT':
             return {
-                'Message' : 'Incident status already changed. You cannot delete this incident!'
+                'Message': 'Incident status already changed. You cannot delete this incident!'
             }, 403
         self.db.delete(incident_id, get_jwt_identity())
         return {
@@ -118,7 +116,7 @@ class Incident(Resource):
         if not userincidents:
             return{
                 'Message': 'Record does not belong to you!'
-            }
+            }, 403
         return jsonify({
             'Message': 'Record returned successfully',
             'Data': incident
@@ -143,7 +141,7 @@ class LocationUpdate(Resource):
             }, 404
         if incident[0]['status'] != 'DRAFT':
             return {
-                'Message' : 'Incident status already changed. You cannot update this incident!'
+                'Message': 'Incident status already changed. You cannot update this incident!'
             }, 403
         if not userincidents:
             return {
@@ -178,7 +176,7 @@ class CommentUpdate(Resource):
             }, 404
         if incident[0]['status'] != 'DRAFT':
             return {
-                'Message' : 'Incident status already changed. You cannot update this incident!'
+                'Message': 'Incident status already changed. You cannot update this incident!'
             }, 403
         if not userincidents:
             return {

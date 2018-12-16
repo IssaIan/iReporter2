@@ -107,7 +107,27 @@ class BaseTest(TestCase):
             "status": "Under-investigation",
             "location": "Nairobi"
         }
-
+        self.test_incident_comment = {
+            "typeofincident": "redflag",
+            "description": "!@#$%^&*!@#$%^&*(",
+            "location": "Nairobi"
+        }
+        self.test_empty_incident_type = {
+            "typeofincident": "",
+            "description": "corruption in nairobi cbd",
+            "location": "Nairobi"
+        }
+        self.test_empty_description= {
+            "typeofincident": "redflag",
+            "description": "",
+            "location": "Nairobi"
+        }
+        self.test_empty_location = {
+            "typeofincident": "redflag",
+            "description": "corruption in nairobi cbd",
+            "location": ""
+        }
+        
         self.userlogin = {'username': self.test_user['username'],
                           'password': self.test_user['password']}
 
@@ -225,6 +245,42 @@ class BaseTest(TestCase):
                                           'content-type': 'application/json'}
                                  )
         return response
+    
+    def specialcharacter_comment(self):
+        token = self.user_token()
+        response = self.app.post('/api/v2/incidents',
+                                 json=self.test_incident_comment,
+                                 headers={'Authorization': 'Bearer {}'.format(token),
+                                          'content-type': 'application/json'}
+                                 )
+        return response
+
+    def emptytypeincident(self):
+        token = self.user_token()
+        response = self.app.post('/api/v2/incidents',
+                                 json=self.test_empty_incident_type,
+                                 headers={'Authorization': 'Bearer {}'.format(token),
+                                          'content-type': 'application/json'}
+                                 )
+        return response     
+
+    def emptylocation(self):
+        token = self.user_token()
+        response = self.app.post('/api/v2/incidents',
+                                 json=self.test_empty_location,
+                                 headers={'Authorization': 'Bearer {}'.format(token),
+                                          'content-type': 'application/json'}
+                                 )
+        return response   
+
+    def emptydescription(self):
+        token = self.user_token()
+        response = self.app.post('/api/v2/incidents',
+                                 json=self.test_empty_description,
+                                 headers={'Authorization': 'Bearer {}'.format(token),
+                                          'content-type': 'application/json'}
+                                 )
+        return response   
 
     def test_app_mode(self):
         self.assertTrue(current_app.config['TESTING'])

@@ -82,13 +82,6 @@ class IncidentModels(Db):
         else:
             return False
 
-    def get_all_by_type(self, incidenttype):
-        self.cursor.execute(
-            "SELECT * FROM incidents WHERE type = '{}'".format(incidenttype)
-        )
-        incidents = self.cursor.fetchall()
-        return incidents
-
     def get_from_type_by_id(self, incidenttype, incident_id):
         self.cursor.execute(
             "SELECT * FROM incidents WHERE type = '{}' and incident_id = {}".format(
