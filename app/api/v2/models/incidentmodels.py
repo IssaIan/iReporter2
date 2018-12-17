@@ -46,11 +46,11 @@ class IncidentModels(Db):
         )
         self.connect.commit()
 
-    def get_by_user_id(self, incident_id):
+    def get_by_user_id(self, user_id, incident_id):
         self.cursor.execute(
-            "SELECT * FROM incidents WHERE created_by = {}".format(incident_id)
+            "SELECT * FROM incidents WHERE created_by = {} and incident_id = {}".format(user_id, incident_id)
         )
-        incident = self.cursor.fetchall()
+        incident = self.cursor.fetchone()
         return incident
 
     def updatestatus(self, status, incident_id):
