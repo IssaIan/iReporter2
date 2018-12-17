@@ -82,7 +82,7 @@ class Incident(Resource):
 
     @jwt_required
     def delete(self, incidenttype, incident_id):
-        userincidents = self.db.get_by_user_id(get_jwt_identity())
+        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not self.db.get_from_type_by_id(incidenttype, incident_id):
             return {
                 'Message': 'The record you are trying to delete has not been found!'
@@ -91,7 +91,7 @@ class Incident(Resource):
             return{
                 'Message': 'You cannot delete an incident that does not belong to you!'
             }, 401
-        if userincidents[0]['status'] != 'DRAFT':
+        if userincidents['status'] != 'DRAFT':
             return {
                 'Message': 'Incident status already changed. You cannot delete this incident!'
             }, 403
@@ -108,7 +108,7 @@ class Incident(Resource):
     @jwt_required
     def get(self, incidenttype, incident_id):
         incident = self.db.get_from_type_by_id(incidenttype, incident_id)
-        userincidents = self.db.get_by_user_id(get_jwt_identity())
+        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if incident == []:
             return {
                 'Message': 'Record not found!'
@@ -134,7 +134,7 @@ class LocationUpdate(Resource):
         data = parser2.parse_args()
         location = data['location']
         incident = self.db.get_from_type_by_id(incidenttype, incident_id)
-        userincidents = self.db.get_by_user_id(get_jwt_identity())
+        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not incident:
             return {
                 'Message': 'Record not found!'
@@ -169,7 +169,7 @@ class CommentUpdate(Resource):
         data = parser3.parse_args()
         comment = data['description']
         incident = self.db.get_from_type_by_id(incidenttype, incident_id)
-        userincidents = self.db.get_by_user_id(get_jwt_identity())
+        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not incident:
             return {
                 'Message': 'Record not found!'
