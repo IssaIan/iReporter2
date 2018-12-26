@@ -89,3 +89,11 @@ class IncidentModels(Db):
         )
         incidents = self.cursor.fetchall()
         return incidents
+
+    def get_by_type(self, incidenttype, user_id):
+        self.cursor.execute(
+            "SELECT * FROM incidents WHERE type = '{}' and created_by = {}".format(
+                incidenttype, user_id)
+        )
+        incidents = self.cursor.fetchall()
+        return incidents
