@@ -42,13 +42,13 @@ class Incidents(Resource):
 
         resp = None
         if self.db.validate_comment(description) == False:
-            resp = {'Message': 'Comment cannot contain special characters!'}
+            resp = {'Error': 'Comment cannot contain special characters!'}
         if typeofincident.isspace() or typeofincident == "":
-            resp = {'Message': 'Type cannot be empty!'}
+            resp = {'Error': 'Type cannot be empty!'}
         if description.isspace() or description == "":
-            resp = {'Message': 'Description cannot be empty!'}
+            resp = {'Error': 'Description cannot be empty!'}
         if location.isspace() or location == "":
-            resp = {'Message': 'Location cannot be empty!'}
+            resp = {'Error': 'Location cannot be empty!'}
         if resp is not None:
             return jsonify(resp)
 
@@ -64,7 +64,7 @@ class Incidents(Resource):
 
         if result == []:
             return {
-                'Message': 'No record found!'
+                'Error': 'No record found!'
             }, 404
         else:
             return jsonify(
@@ -85,15 +85,15 @@ class Incident(Resource):
         userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not self.db.get_from_type_by_id(incidenttype, incident_id):
             return {
-                'Message': 'The record you are trying to delete has not been found!'
+                'Error': 'The record you are trying to delete has not been found!'
             }, 404
         if not userincidents:
             return{
-                'Message': 'You cannot delete an incident that does not belong to you!'
+                'Error': 'You cannot delete an incident that does not belong to you!'
             }, 401
         if userincidents['status'] != 'DRAFT':
             return {
-                'Message': 'Incident status already changed. You cannot delete this incident!'
+                'Error': 'Incident status already changed. You cannot delete this incident!'
             }, 403
         self.db.delete(incident_id, get_jwt_identity())
         return {
@@ -111,11 +111,11 @@ class Incident(Resource):
         userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if incident == []:
             return {
-                'Message': 'Record not found!'
+                'Error': 'Record not found!'
             }, 404
         if not userincidents:
             return{
-                'Message': 'Record does not belong to you!'
+                'Error': 'Record does not belong to you!'
             }, 403
         return jsonify({
             'Message': 'Record returned successfully',
@@ -134,7 +134,7 @@ class Type(Resource):
         incident = self.db.get_by_type(incidenttype, get_jwt_identity())
         if incident == []:
             return {
-                'Message': 'Record not found!'
+                'Error': 'Record not found!'
             }, 404
         return jsonify({
             'Message': 'Record returned successfully',
@@ -156,15 +156,15 @@ class LocationUpdate(Resource):
         userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not incident:
             return {
-                'Message': 'Record not found!'
+                'Error': 'Record not found!'
             }, 404
         if incident[0]['status'] != 'DRAFT':
             return {
-                'Message': 'Incident status already changed. You cannot update this incident!'
+                'Error': 'Incident status already changed. You cannot update this incident!'
             }, 403
         if not userincidents:
             return {
-                'Message': 'You cannot update an incident that does not belong to you!'
+                'Error': 'You cannot update an incident that does not belong to you!'
             }, 401
         self.db.updatelocation(location, incident_id, get_jwt_identity())
         return jsonify({
@@ -191,15 +191,15 @@ class CommentUpdate(Resource):
         userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if not incident:
             return {
-                'Message': 'Record not found!'
+                'Error': 'Record not found!'
             }, 404
         if incident[0]['status'] != 'DRAFT':
             return {
-                'Message': 'Incident status already changed. You cannot update this incident!'
+                'Error': 'Incident status already changed. You cannot update this incident!'
             }, 403
         if not userincidents:
             return {
-                'Message': 'You cannot update an incident that does not belong to you!'
+                'Error': 'You cannot update an incident that does not belong to you!'
             }, 401
         self.db.updatecomment(comment, incident_id, get_jwt_identity())
         return jsonify({
@@ -230,11 +230,11 @@ class Admin(Resource):
 
         if not self.admin.isadmin(get_jwt_identity()):
             return{
-                'Message': 'You are not an admin!'
+                'Error': 'You are not an admin!'
             }, 403
         if not incident:
             return {
-                'Message': 'Record not found!'
+                'Error': 'Record not found!'
             }, 404
         self.db.updatestatus(status, incident_id)
         try:

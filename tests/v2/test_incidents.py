@@ -23,7 +23,7 @@ class IncidentTests(BaseTest):
         response = self.app.get('/api/v2/incidents/100', headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
                                                                   'content-type': 'application/json'})
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Record not found!')
+        self.assertEqual(result['Error'], 'Record not found!')
         self.assertEqual(response.status_code, 404)
 
     def test_fetch_all_incidents(self):
@@ -66,7 +66,7 @@ class IncidentTests(BaseTest):
                                   json=self.update_incidentcomment,
                                   headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
                                            'content-type': 'application/json'})
-        self.assertEqual({'Message': 'Record not found!'}, response.get_json())
+        self.assertEqual({'Error': 'Record not found!'}, response.get_json())
 
     def test_delete_incident(self):
         self.create_incident()
@@ -88,14 +88,14 @@ class IncidentTests(BaseTest):
                                    )
         result = json.loads(response.data)
         self.assertEqual(
-            result['Message'], 'You cannot delete an incident that does not belong to you!')
+            result['Error'], 'You cannot delete an incident that does not belong to you!')
         self.assertEqual(response.status_code, 401)
 
     def test_fail_delete_incident(self):
         self.create_incident()
         response = self.app.delete('/api/v2/redflag/200',  headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
                                                                     'content-type': 'application/json'})
-        self.assertEqual({'Message': 'The record you are trying to delete has not been found!',
+        self.assertEqual({'Error': 'The record you are trying to delete has not been found!',
                           }, response.get_json())
 
     def test_updatestatus(self):
@@ -111,35 +111,35 @@ class IncidentTests(BaseTest):
                                   headers={'Authorization': 'Bearer {}'.format(self.user_token()),
                                            'content-type': 'application/json'})
         self.assertEqual(response.status_code, 403)
-        self.assertEqual({'Message': 'You are not an admin!'},
+        self.assertEqual({'Error': 'You are not an admin!'},
                          response.get_json())
 
     def test_comment_special_characters(self):
         response = self.specialcharacter_comment()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],
+        self.assertEqual(result['Error'],
                          'Comment cannot contain special characters!')
 
     def test_empty_incidenttype(self):
         response = self.emptytypeincident()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Type cannot be empty!')
+        self.assertEqual(result['Error'], 'Type cannot be empty!')
 
     def test_an_empty_description(self):
         response = self.emptydescription()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Description cannot be empty!')
+        self.assertEqual(result['Error'], 'Description cannot be empty!')
 
     def test_an_empty_location(self):
         response = self.emptylocation()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Location cannot be empty!')
+        self.assertEqual(result['Error'], 'Location cannot be empty!')
 
     def test_empty_database(self):
         response = self.app.get('/api/v2/incidents', headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
                                                               'content-type': 'application/json'})
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'No record found!')
+        self.assertEqual(result['Error'], 'No record found!')
         self.assertEqual(response.status_code, 404)
 
     def test_delete_status_changed_incident(self):
@@ -151,7 +151,7 @@ class IncidentTests(BaseTest):
                                                                   'content-type': 'application/json'})
         result = json.loads(response.data)
         self.assertEqual(
-            result['Message'], 'Incident status already changed. You cannot delete this incident!')
+            result['Error'], 'Incident status already changed. You cannot delete this incident!')
         self.assertEqual(response.status_code, 403)
 
     def test_patch_status_changed_incident(self):
@@ -166,5 +166,5 @@ class IncidentTests(BaseTest):
                                   )
         result = json.loads(response.data)
         self.assertEqual(
-            result['Message'], 'Incident status already changed. You cannot update this incident!')
+            result['Error'], 'Incident status already changed. You cannot update this incident!')
         self.assertEqual(response.status_code, 403)

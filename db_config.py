@@ -22,7 +22,7 @@ class Db:
             username character varying(100) NOT NULL,
             email character varying(100) NOT NULL,
             date_created timestamp with time zone DEFAULT ('now'::text):: date NOT NULL,
-            phonenumber int,
+            phonenumber character varying(10) NOT NULL,
             password character varying(150) NOT NULL,
             is_admin BOOLEAN DEFAULT FALSE
             )"""

@@ -28,14 +28,15 @@ To install and run the project locally:
 
 | **HTTP METHOD** | **URI**                             | **ACTION**                                                                     |
 |-----------------|-------------------------------------|------------------------------------------------------------------------|
-|  **GET**        |  `/incidents`                                           | fetch all incident records                                                    |
+|  **GET**        |  `/incidents`                                           | fetch all incident records                                                     |
 |  **POST**       |  `/incidents`                                           | create incident record                                                         |
-| **DELETE, GET** |  `/<incidenttype>/<int:incident_id>`                    | get and delete incident records with given `incidenttype` and `incident_id` |
-| **PATCH**       | `/<incidenttype>/<int:incident_id>`                     | update incident records with given `incidenttype` and `incident_id`            |
+| **DELETE, GET** |  `/<incidenttype>/<int:incident_id>`                    | get and delete incident records with given `incidenttype` and `incident_id`|
+| **PATCH**       | `/<incidenttype>/<int:incident_id>`                     | update incident records with given `incidenttype` and `incident_id`|
 |  **GET**        |  `/incidenttype/<int:incident_id>`                      | get list of all incidents, create incident                                     |
+| **GET**         | `/<incidenttype>`                                       | get list of incidents belonging to a user given `incidenttype`                 |
 |  **POST**       |  `auth/signup`                                          | registers a new user                                                           |
 |  **GET**        |  `/auth/signup`                                         | fetch all users(admin only)                                                    |
 | **POST**        | `/auth/login`                                           | login in a user                                                                |
-| **PATCH**       | `/admin//<incidenttype>/<int:incident_id>/statusupdate` | admin updates incident's status                                                |
+| **PATCH**       | `/admin/<incidenttype>/<int:incident_id>/statusupdate`  | admin updates incident's status                                                |
 
 ### Author : Issa
