@@ -70,7 +70,7 @@ class Users(Resource):
             return {'Error': 'Please ensure that both passwords match!'}, 401
 
         self.db.save_user(first_name, last_name, username,
-                        email, phonenumber, password)
+                          email, phonenumber, password)
         return {'Message': 'User saved successfully'}, 201
 
     @jwt_required
@@ -102,15 +102,14 @@ class Login(Resource):
         data = parser2.parse_args()
         username = data['username'].lower()
         password = data['password']
-        user = self.db.get_user_name(username)
 
-        if username.isspace() or username == "":
+        if self.db.validators(username):
             return {'Error': 'Please provide all credentials!'}, 422
 
-        if password.isspace() or password is None:
+        if self.db.validators(password):
             return {'Error': 'Please enter a valid password!'}, 422
 
-        if not user:
+        if not self.db.get_user_name(username):
             return {'Error': 'No user with that username found!'}, 404
 
         if not self.db.check_password(username, password):
@@ -121,5 +120,5 @@ class Login(Resource):
             return jsonify({
                 'Message': 'Welcome {}. You are now logged in!'.format(username),
                 'Token': login_token,
-                'User': user
+                'User': self.db.get_user_name(username)
             }, 200)
