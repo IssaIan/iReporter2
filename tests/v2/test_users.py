@@ -20,14 +20,14 @@ class UsersTest(BaseTest):
     def test_login_unregistered_user(self):
         response = self.login()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],
+        self.assertEqual(result['Error'],
                          'No user with that username found!')
         self.assertEqual(response.status_code, 404)
 
     def test_unmatching_password_during_registration(self):
         response = self.wrongpasswordregistration()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],
+        self.assertEqual(result['Error'],
                          'Please ensure that both passwords match!')
         self.assertEqual(response.status_code, 401)
 
@@ -35,21 +35,21 @@ class UsersTest(BaseTest):
         response = self.invalidpasswordregistration()
         result = json.loads(response.data)
         self.assertEqual(
-            result['Message'], 'Please fill in a valid password! Password must be 8 characters long.')
+            result['Error'], 'Please fill in a valid password! Password must be 8 characters long.')
         self.assertEqual(response.status_code, 422)
 
     def test_existingusername(self):
         self.registration()
         response = self.existingusernameregistration()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Username already exists!')
+        self.assertEqual(result['Error'], 'Username already exists!')
         self.assertEqual(response.status_code, 401)
 
     def test_existingemail(self):
         self.registration()
         response = self.existingemailregistration()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Email already exists!')
+        self.assertEqual(result['Error'], 'Email already exists!')
         self.assertEqual(response.status_code, 401)
 
     def test_getallusers(self):
@@ -64,4 +64,4 @@ class UsersTest(BaseTest):
     def test_firstnamemissing(self):
         response = self.registerwithoutfirstname()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'], 'Please enter a first name!')
+        self.assertEqual(result['Error'], 'Please enter a first name!')

@@ -1,7 +1,7 @@
 # iReporter2
 
-[![Build Status](https://travis-ci.org/IssaIan/iReporter2.svg?branch=develop)](https://travis-ci.org/IssaIan/iReporter2)
-[![Coverage Status](https://coveralls.io/repos/github/IssaIan/iReporter2/badge.svg?branch=develop)](https://coveralls.io/github/IssaIan/iReporter2?branch=develop)
+[![Build Status](https://travis-ci.org/IssaIan/iReporter2.png?branch=develop)](https://travis-ci.org/IssaIan/iReporter2)
+[![Coverage Status](https://coveralls.io/repos/github/IssaIan/iReporter2/badge.png?branch=develop)](https://coveralls.io/github/IssaIan/iReporter2?branch=develop)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9b7374eb098e48c5a7d5c77bb123a6b1)](https://app.codacy.com/app/IssaIan/iReporter2?utm_source=github.com&utm_medium=referral&utm_content=IssaIan/iReporter2&utm_campaign=Badge_Grade_Settings)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2df90d509788fc828151/maintainability)](https://codeclimate.com/github/IssaIan/iReporter2/maintainability)
 
@@ -28,14 +28,15 @@ To install and run the project locally:
 
 | **HTTP METHOD** | **URI**                             | **ACTION**                                                                     |
 |-----------------|-------------------------------------|------------------------------------------------------------------------|
-|  **GET**        |  `/incidents`                                           | fetch all incident records                                                    |
+|  **GET**        |  `/incidents`                                           | fetch all incident records                                                     |
 |  **POST**       |  `/incidents`                                           | create incident record                                                         |
-| **DELETE, GET** |  `/<incidenttype>/<int:incident_id>`                    | get and delete incident records with given `incidenttype` and `incident_id` |
-| **PATCH**       | `/<incidenttype>/<int:incident_id>`                     | update incident records with given `incidenttype` and `incident_id`            |
+| **DELETE, GET** |  `/<incidenttype>/<int:incident_id>`                    | get and delete incident records with given `incidenttype` and `incident_id`|
+| **PATCH**       | `/<incidenttype>/<int:incident_id>`                     | update incident records with given `incidenttype` and `incident_id`|
 |  **GET**        |  `/incidenttype/<int:incident_id>`                      | get list of all incidents, create incident                                     |
+| **GET**         | `/<incidenttype>`                                       | get list of incidents belonging to a user given `incidenttype`                 |
 |  **POST**       |  `auth/signup`                                          | registers a new user                                                           |
 |  **GET**        |  `/auth/signup`                                         | fetch all users(admin only)                                                    |
 | **POST**        | `/auth/login`                                           | login in a user                                                                |
-| **PATCH**       | `/admin//<incidenttype>/<int:incident_id>/statusupdate` | admin updates incident's status                                                |
+| **PATCH**       | `/admin/<incidenttype>/<int:incident_id>/statusupdate`  | admin updates incident's status                                                |
 
 ### Author : Issa
