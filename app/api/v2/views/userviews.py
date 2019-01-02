@@ -103,15 +103,12 @@ class Login(Resource):
         username = data['username'].lower()
         password = data['password']
 
-        if self.db.validators(username):
+        if self.db.validators(username) == False:
             return {'Error': 'Please provide all credentials!'}, 422
-
-        if self.db.validators(password):
+        if self.db.validators(password) == False:
             return {'Error': 'Please enter a valid password!'}, 422
-
         if not self.db.get_user_name(username):
             return {'Error': 'No user with that username found!'}, 404
-
         if not self.db.check_password(username, password):
             return {'Error': 'Wrong password!'}, 401
 
