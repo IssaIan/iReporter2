@@ -108,15 +108,10 @@ class Incident(Resource):
     @jwt_required
     def get(self, incidenttype, incident_id):
         incident = self.db.get_from_type_by_id(incidenttype, incident_id)
-        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
         if incident == []:
             return {
                 'Error': 'Record not found!'
             }, 404
-        if not userincidents:
-            return{
-                'Error': 'Record does not belong to you!'
-            }, 403
         return jsonify({
             'Message': 'Record returned successfully',
             'Data': incident
