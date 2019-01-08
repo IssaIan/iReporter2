@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <title>User Account Page</title>
+</head>
+
+<body onload="openPage('allIncidents',this)">
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="navbar-brand">iReporter</a>
+            <ul>
+                <li><a href="index.html" class="navbar-link"> &nbsp; Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <button class="button btn-blue" onclick="openPage('allIncidents',this)"> All Incidents</button>
+        <button class="button btn-blue" onclick="openPage('allUsers',this)"> All Users</button>
+        <button class="button btn-blue" onclick="openPage('editStatus',this)"> Update Status</button>
+
+    </div>
+
+    <section class="flex-container" id="allIncidents">
+        <div id="output3"></div>
+    </section>
+
+    <section class="flex-container" id="allUsers">
+        <div id="output4"></div>
+    </section>
+
+    <section class="flex-container" id="editStatus">
+        <div class="record-form">
+            <p class="sign" align="center"> <strong>Search for the Incident you want to edit using the parameters
+                    provided.<br>
+                    You can only edit the STATUS!</strong></p>
+            <form>
+                <div>
+                    <label for="record type"> <strong> Record Type: </strong> </label><br>
+                    <select name="record_type" id="record_type" class="username">
+                        <option value="intervention">Intervention</option>
+                        <option value="red-flag">Red-flag</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="incident_id"> <strong>Incident ID:</strong> </label><br>
+                    <input id="incident_id" class="username" type="text" align="center" placeholder="Enter Incident ID"
+                        required>
+                </div>
+                <div id="output5"></div>
+                <button id="findone" class="button btn-green" align="center">Search for Incident</button><br>
+                <button id="edit1" class="button btn-green">Update Status</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>@Issa</p>
+    </footer>
+    <script src="js/scripts.js"></script>
+    <script src="js/powerup.js"></script>
+
+</body>
+
+</html>
