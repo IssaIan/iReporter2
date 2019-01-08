@@ -129,10 +129,10 @@ class Type(Resource):
         incident = self.db.get_by_type(incidenttype, get_jwt_identity())
         if incident == []:
             return {
-                'Error': 'Record not found!'
+                'Error': 'Records not found!'
             }, 404
         return jsonify({
-            'Message': 'Record returned successfully',
+            'Message': 'Records returned successfully',
             'Data': incident
         }, 200)
 
