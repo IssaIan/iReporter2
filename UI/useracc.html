@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/UI/css/style.css" rel="stylesheet" type="text/css">
+    <title>User Account Page</title>
+</head>
+
+<body onload="openPage('newIncident',this)">
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="navbar-brand">iReporter</a>
+            <ul>
+                <li><a href="/UI/index.html" class="navbar-link"> &nbsp; Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <button class="button btn-blue" onclick="openPage('newIncident',this)"> New Incident</button>
+        <button class="button btn-blue" onclick="openPage('incidentbytype',this)"> Get Incidents By
+            Type</button>
+        <button class="button btn-blue" onclick="openPage('editIncident',this)"> Edit Incident</button>
+
+    </div>
+
+    <section class="flex-container" id="incidentbytype">
+        <div class="record-form">
+            <form>
+                <div>
+                    <label for="record type"> <strong> Record Type: </strong> </label><br>
+                    <select name="record_type" id="record_type" class="username">
+                        <option value="intervention">Intervention</option>
+                        <option value="red-flag">Red-flag</option>
+                    </select>
+                </div>
+                <button id="type" class="button btn-green" align="center">Submit</button>
+            </form>
+            <div id="output"></div>
+
+        </div>
+    </section>
+
+    <section class="flex-container" id="newIncident">
+        <div class="record-form">
+            <p class="sign" align="center"> <strong>CREATE NEW INCIDENT</strong></p>
+            <form class="flag-form">
+                <div>
+                    <label for="record type"> <strong> Record Type: </strong> </label><br>
+                    <select name="record_type" id="record_type" class="username">
+                        <option value="intervention">Intervention</option>
+                        <option value="red-flag">Red-flag</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="description"> <strong>Description:</strong> </label><br>
+                    <input id="description" class="username" type="text" align="center" placeholder="Describe your case"
+                        required>
+                </div>
+                <div>
+                    <label for="map"> <strong>Location:</strong> </label><br>
+                    <input id="location" class="username" type="text" align="center" placeholder="Enter longitude and latitude "
+                        required><br>
+                </div>
+                <div>
+                    <label for="image"> <strong>Image or Video:</strong> </label><br>
+                    <input id="media" class="username" type="file" align="center" accept="Image/*,Video/*">
+                </div>
+                <button id="post" class="button btn-green" align="center">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="flex-container" id="editIncident">
+        <div class="record-form">
+            <p class="sign" align="center"> <strong>Search for the Incident you want to edit using the parameters
+                    provided.<br>
+                    You can only edit the DESCRIPTION or LOCATION!</strong></p>
+            <form>
+                <div>
+                    <label for="record type"> <strong> Record Type: </strong> </label><br>
+                    <select name="record_type" id="record_type" class="username">
+                        <option value="intervention">Intervention</option>
+                        <option value="red-flag">Red-flag</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="incident_id"> <strong>Incident ID:</strong> </label><br>
+                    <input id="incident_id" class="username" type="text" align="center" placeholder="Enter Incident ID"
+                        required>
+                </div>
+                <div id="output2"></div>
+                <button id="findone" class="button btn-green" align="center">Search for Incident</button><br>
+                <button id="edit1" class="button btn-green">Update Description</button>
+                <button id="edit2" class="button btn-green">Update Location</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>@Issa</p>
+    </footer>
+    <script src="/UI/js/scripts.js"></script>
+    <script src="/UI/js/powerup.js"></script>
+
+</body>
+
+</html>

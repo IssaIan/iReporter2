@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset = "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/UI/css/style.css" rel="stylesheet" type="text/css">
+        <title>Sign up page</title>
+    </head>
+    <body>
+            <header>
+                    <nav class="navbar">
+                        <span class="navbar-toggle" id="navbar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                        <a href="#" class="navbar-brand">iReporter</a>
+                        <ul>
+                            <li><a href="/UI/index.html" class="navbar-link"><i class="fas fa-lock"></i> &nbsp; Home</a></li>
+                            <li> <a href="/UI/usignin.html" class="navbar-link"><i class="fas fa-lock"></i> &nbsp; Sign In</a></li>
+                        </ul>
+                    </nav>
+            </header>
+        <form> 
+            <div class="username">
+                <h1>iReporter Sign Up Page</h1>
+                <label>First Name:</label><br><input id="first_name" type="text" placeholder="First Name" required><br><br>
+                <label>Last Name:</label><br><input id="last_name" type="text" placeholder="Last Name" required><br><br>
+                <label>Username:</label><br><input id="username" type="text" placeholder="Username" autocomplete="username" required><br><br>
+                <label>Email:</label><br><input id="email" type="email"   placeholder="Email" required><br><br>
+                <label>Phone Number:</label><br><input id="phonenumber" type="tel"  placeholder="Phone Number" autocomplete="username" required><br><br>
+                <label>Password:</label><br><input id="password" type="password"  placeholder="Password" autocomplete="new-password" required><br><br>
+                <label>Confirm Password:</label><br><input id="confirm_password" type="password" placeholder="Confirm Password" autocomplete="new-password" required><br><br>
+                <input id="register" type="submit" class="button btn-green" value="Sign Up">
+                <p>Already have an account? <a href="/UI/usignin.html"><u>Click here!</u></a></p>
+            </div>
+        </form>
+        <footer>
+            <p>
+                @issa
+            </p>
+        </footer>
+        <script src="/UI/js/register.js"></script>
+    </body>
+</html>
