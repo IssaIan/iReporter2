@@ -21,7 +21,7 @@ function loginUser(e){
         sessionStorage.setItem('token', token)
         if (data.Error){
           alert(data.Error)
-          } else if (data[0].User.is_admin === "false") {
+          } else if (data[0].User.is_admin === false) {
             alert(data[0].Message)
             window.location = "useracc.html"
           } else {
