@@ -18,14 +18,14 @@ function loginUser(e){
         sessionStorage.setItem('user', user)
         let token = data[0].Token
         sessionStorage.setItem('token', token)
-        if (data.Error){
-          alert(data.Error)
-          } else if (data[0].User[0].is_admin === false) {
+        if (data[0].User[0].is_admin === false) {
             alert(data[0].Message)
             window.location = "useracc.html"
-          } else {
+          } else if (data[0].User[0].is_admin !== false){
             alert(data[0].Message)
             window.location = "admin.html"
+          } else {
+            alert(data.Error)
           }
         })
 }
