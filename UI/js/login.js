@@ -14,7 +14,7 @@ function loginUser(e){
       })
       .then(res => res.json())
       .then(data => {
-        console.log(data[0].User)
+        console.log(data[0].User.is_admin)
         let user = document.getElementById('username').value;
         sessionStorage.setItem('user', user)
         let token = data[0].Token
