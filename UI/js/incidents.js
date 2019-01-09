@@ -1,5 +1,4 @@
 document.getElementById('getincidents').addEventListener('click', getIncidents);
-document.getElementById('load').addEventListener('loadend', getIncidents);
 
 function getIncidents(e) {
     e.preventDefault();
@@ -14,17 +13,19 @@ function getIncidents(e) {
                 data[0].Data.forEach(function (incident) {
                     output += `
               <ul class="list-group mb-3">
-                  <li class="list-group-item">INCIDENT ID: ${incident.incident_id}</li>
-                  <li class="list-group-item">CREATED BY: ${incident.created_by}</li>
-                  <li class="list-group-item">CREATED ON: ${incident.created_on}</li>
-                  <li class="list-group-item">STATUS: ${incident.status}</li>
-                  <li class="list-group-item">TYPE OF INCIDENT: ${incident.type}</li>
-                  <li class="list-group-item">DESCRIPTION: ${incident.description}</li>
-                  <li class="list-group-item">LOCATION: ${incident.location}</li>
+                  <li class="list-group-item"><strong>INCIDENT ID: </strong>${incident.incident_id}</li>
+                  <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
+                  <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
+                  <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
+                  <li class="list-group-item"><strong>TYPE OF INCIDENT: </strong>${incident.type}</li>
+                  <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
+                  <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
               </ul>
               `;
                 });
                 document.getElementById('output3').innerHTML = output;
+                document.getElementById('output2').innerHTML = output;
+
                 alert(data[0].Message)
             }
         })

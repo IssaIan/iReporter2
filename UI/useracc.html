@@ -8,13 +8,13 @@
     <title>User Account Page</title>
 </head>
 
-<body id="load" onload="openPage('allIncidents',this)">
+<body onload="getIncidents(), openPage('allIncidents',this)">
 
     <header>
         <nav class="navbar">
             <a href="#" class="navbar-brand">iReporter</a>
             <ul>
-                <li><a href="/index.html" class="navbar-link"> &nbsp; Home</a></li>
+                <li><a href="iReporter2/index.html" class="navbar-link"> &nbsp; Home</a></li>
             </ul>
         </nav>
     </header>
@@ -28,7 +28,7 @@
     </div>
 
     <section class="flex-container" id="allIncindents">
-        <div id="output3" class="record-form"></div>
+        <div id="output2" class="record-form"></div>
     </section>
 
     <section class="flex-container" id="incidentbytype">
