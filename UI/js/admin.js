@@ -4,6 +4,7 @@ document.getElementById('editstatus').addEventListener('click', updateStatus);
 
 function getUsers(e) {
   e.preventDefault();
+  let token = sessionStorage.getItem('token');
   fetch('https://issaireporterv2.herokuapp.com/api/v2/auth/signup', {
       method: 'GET',
       headers: {

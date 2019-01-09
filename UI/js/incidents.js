@@ -1,5 +1,5 @@
 document.getElementById('getincidents').addEventListener('click', getIncidents);
-document.getElementById('load').addEventListener('load', getIncidents);
+document.getElementById('load').addEventListener('loadend', getIncidents);
 
 function getIncidents(e) {
     e.preventDefault();
