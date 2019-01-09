@@ -1,4 +1,4 @@
-document.getElementById('allUsers').addEventListener('click', getUsers);
+document.getElementById('getusers').addEventListener('click', getUsers);
 document.getElementById('find').addEventListener('click', admingetIncident);
 document.getElementById('editstatus').addEventListener('click', updateStatus);
 
@@ -68,9 +68,10 @@ function admingetIncident(e) {
                 <label><strong>STATUS: </strong></label><br>
                 <li class="list-group-item">${incident.status}
                 <br>
-                  <select name="status" id="edit_status" class="username">
-                      <option value="intervention">Intervention</option>
-                      <option value="red-flag">Red-flag</option>
+                  <select name="status" id="edit_status">
+                      <option value="intervention">Under Investigation</option>
+                      <option value="red-flag">Rejected</option>
+                      <option value="red-flag">Resolved</option>
                   </select>
                 <br>
                 </li>
