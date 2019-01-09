@@ -1,4 +1,5 @@
 document.getElementById('getincidents').addEventListener('click', getIncidents);
+document.getElementById('getincidents2').addEventListener('click', getIncidents);
 
 function getIncidents(e) {
     e.preventDefault();
