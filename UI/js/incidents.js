@@ -1,5 +1,4 @@
-document.getElementById('getincidents').addEventListener('click', getIncidents);
-document.getElementById('getincidents2').addEventListener('click', getIncidents);
+document.getElementById('getallincidents').addEventListener('click', getIncidents);
 
 function getIncidents(e) {
     e.preventDefault();
@@ -25,8 +24,6 @@ function getIncidents(e) {
               `;
                 });
                 document.getElementById('output3').innerHTML = output;
-                document.getElementById('output2').innerHTML = output;
-
                 alert(data[0].Message)
             }
         })
