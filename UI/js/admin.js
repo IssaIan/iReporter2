@@ -21,12 +21,12 @@ function getUsers(e) {
         data[0].Data.forEach(function (user) {
           output += `
                   <ul class="list-group mb-3">
-                      <li class="list-group-item">USER ID: ${user.user_id}</li>
-                      <li class="list-group-item">FIRST NAME: ${user.first_name}</li>
-                      <li class="list-group-item">LAST NAME: ${user.last_name}</li>
-                      <li class="list-group-item">USERNAME: ${user.username}</li>
-                      <li class="list-group-item">EMAIL: ${user.email}</li>
-                      <li class="list-group-item">PHONE NUMBER: 0${user.phonenumber}</li>
+                      <li class="list-group-item"><strong>USER ID: </strong>${user.user_id}</li>
+                      <li class="list-group-item"><strong>FIRST NAME: </strong>${user.first_name}</li>
+                      <li class="list-group-item"><strong>LAST NAME: </strong>${user.last_name}</li>
+                      <li class="list-group-item"><strong>USERNAME: </strong>${user.username}</li>
+                      <li class="list-group-item"><strong>EMAIL: </strong>${user.email}</li>
+                      <li class="list-group-item"><strong>PHONE NUMBER: </strong>0${user.phonenumber}</li>
                   </ul>
                   `;
         });
