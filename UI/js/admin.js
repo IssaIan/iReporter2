@@ -66,7 +66,14 @@ function admingetIncident(e) {
                 <label><strong>CREATED ON: </strong></label><br>
                 <li class="list-group-item">${incident.created_on}</li>
                 <label><strong>STATUS: </strong></label><br>
-                <li id"edit_status" class="list-group-item" contenteditable="true">${incident.status}</li>
+                <li class="list-group-item">${incident.status}
+                <br>
+                  <select name="status" id="edit_status" class="username">
+                      <option value="intervention">Intervention</option>
+                      <option value="red-flag">Red-flag</option>
+                  </select>
+                <br>
+                </li>
                 <label><strong>TYPE OF INCIDENCE: </strong></label><br>
                 <li class="list-group-item">${incident.type}</li>
                 <label><strong>DESCRIPTION: </strong></label><br>
