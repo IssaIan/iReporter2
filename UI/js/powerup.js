@@ -83,25 +83,27 @@ function getIncident(e) {
       console.log(data)
       if (data.Error) {
         alert(data.Error)
+      } else if (data.message) {
+        alert(data.message)
       } else {
         let output = `<h2>Incident to be Updated</h2>`;
         data[0].Data.forEach(function (incident) {
           output += `
             <ul class="list-group mb-3">
                 <label><strong>INCIDENT ID: </strong></label><br>
-                <li class="list-group-item">${incident.incident_id}</li><br>
+                <li class="list-group-item">${incident.incident_id}</li>
                 <label><strong>CREATED BY: </strong></label><br>
-                <li class="list-group-item">${incident.created_by}</li><br>
+                <li class="list-group-item">${incident.created_by}</li>
                 <label><strong>CREATED ON: </strong></label><br>
-                <li class="list-group-item">${incident.created_on}</li><br>
+                <li class="list-group-item">${incident.created_on}</li>
                 <label><strong>STATUS: </strong></label><br>
-                <li class="list-group-item">${incident.status}</li><br>
+                <li class="list-group-item">${incident.status}</li>
                 <label><strong>TYPE OF INCIDENCE: </strong></label><br>
-                <li class="list-group-item">${incident.type}</li><br>
+                <li class="list-group-item">${incident.type}</li>
                 <label><strong>DESCRIPTION: </strong></label><br>
-                <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li><br>
+                <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
                 <label><strong>LOCATION: </strong></label><br>
-                <li id="edit_location" class="list-group-item" contenteditable="true">${incident.location}</li><br>
+                <li id="edit_location" class="list-group-item" contenteditable="true">${incident.location}</li>
             </ul>
             `;
         });
@@ -131,7 +133,7 @@ function editDescription(e) {
       console.log(data)
       if (data[0].Message == `Updated ${incidenttype} comment successfully!`) {
         alert(data[0].Message)
-      } else if (data.Error){
+      } else if (data.Error) {
         alert(data.Error)
       } else {
         alert(data.message)
@@ -159,7 +161,7 @@ function editLocation(e) {
       console.log(data)
       if (data[0].Message == `Updated ${incidenttype} location successfully!`) {
         alert(data[0].Message)
-      } else if (data.Error){
+      } else if (data.Error) {
         alert(data.Error)
       } else {
         alert(data.message)

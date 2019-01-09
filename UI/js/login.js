@@ -15,15 +15,20 @@ function loginUser(e){
       .then(res => res.json())
       .then(data => {
         let user = document.getElementById('username').value;
-        console.log(data);
         if (data.Error){
           alert(data.Error)
-          } else {
+          } else if (data[0].is_admin == "false") {
             sessionStorage.setItem('user', user)
             let token = data[0].Token
             sessionStorage.setItem('token', token)
             alert(data[0].Message)
             window.location = "useracc.html"
-            }
+          } else {
+            sessionStorage.setItem('user', user)
+            let token = data[0].Token
+            sessionStorage.setItem('token', token)
+            alert(data[0].Message)
+            window.location = "admin.html"
+          }
         })
 }
