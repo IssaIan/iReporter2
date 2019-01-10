@@ -97,3 +97,11 @@ class IncidentModels(Db):
         )
         incidents = self.cursor.fetchall()
         return incidents
+
+    def get_by_status(self, status, user_id):
+        self.cursor.execute(
+            "SELECT * FROM incidents WHERE status = '{}' and created_by = {}".format(
+                status, user_id)
+        )
+        incidents = self.cursor.fetchall()
+        return incidents
