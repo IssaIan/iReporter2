@@ -136,6 +136,24 @@ class Type(Resource):
             'Data': incident
         }, 200)
 
+class Status(Resource):
+    """Handles fetching incidents by status in the system"""
+
+    def __init__(self):
+        self.db = IncidentModels()
+
+    @jwt_required
+    def get(self, status):
+        incident = self.db.get_by_status(status, get_jwt_identity())
+        if incident == []:
+            return {
+                'Error': 'Records not found!'
+            }, 404
+        return jsonify({
+            'Message': 'Records returned successfully',
+            'Data': incident
+        }, 200)
+
 
 class LocationUpdate(Resource):
     """Handles incident location update by users in the system"""
