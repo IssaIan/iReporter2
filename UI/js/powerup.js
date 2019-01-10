@@ -45,17 +45,17 @@ function getIncidentsbyType(e) {
       if (data.Error) {
         alert(data.Error)
       } else {
-        let output = `<h2>Incidents</h2>`;
+        let output = `<h2 style="text-transform: uppercase;">${data[0].Data[0].type}s</h2>`;
         data[0].Data.forEach(function (incident) {
           output += `
             <ul class="list-group mb-3">
-                <li class="list-group-item">INCIDENT ID: ${incident.incident_id}</li>
-                <li class="list-group-item">CREATED BY: ${incident.created_by}</li>
-                <li class="list-group-item">CREATED ON: ${incident.created_on}</li>
-                <li class="list-group-item">STATUS: ${incident.status}</li>
-                <li class="list-group-item">TYPE OF INCIDENT: ${incident.type}</li>
-                <li class="list-group-item">DESCRIPTION: ${incident.description}</li>
-                <li class="list-group-item">LOCATION: ${incident.location}</li>
+            <li class="list-group-item"><strong>INCIDENT ID: </strong>${incident.incident_id}</li>
+            <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
+            <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
+            <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
+            <li class="list-group-item"><strong>TYPE OF INCIDENT: </strong>${incident.type}</li>
+            <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
+            <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
             </ul>
             `;
         });
@@ -87,16 +87,11 @@ function getIncident(e) {
         data[0].Data.forEach(function (incident) {
           output += `
             <ul class="list-group mb-3">
-                <label><strong>INCIDENT ID: </strong></label><br>
-                <li class="list-group-item">${incident.incident_id}</li>
-                <label><strong>CREATED BY: </strong></label><br>
-                <li class="list-group-item">${incident.created_by}</li>
-                <label><strong>CREATED ON: </strong></label><br>
-                <li class="list-group-item">${incident.created_on}</li>
-                <label><strong>STATUS: </strong></label><br>
-                <li class="list-group-item">${incident.status}</li>
-                <label><strong>TYPE OF INCIDENCE: </strong></label><br>
-                <li class="list-group-item">${incident.type}</li>
+                <li class="list-group-item"><strong>INCIDENT ID: </strong>${incident.incident_id}</li>
+                <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
+                <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
+                <li class="list-group-item"><strong>TYPE OF INCIDENCE: </strong>${incident.type}</li>
+                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
                 <label><strong>DESCRIPTION: </strong></label><br>
                 <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
                 <label><strong>LOCATION: </strong></label><br>

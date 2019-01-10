@@ -57,28 +57,13 @@ function admingetIncident(e) {
         data[0].Data.forEach(function (incident) {
           output += `
             <ul class="list-group mb-3">
-                <label><strong>INCIDENT ID: </strong></label><br>
-                <li class="list-group-item">${incident.incident_id}</li>
-                <label><strong>CREATED BY: </strong></label><br>
-                <li class="list-group-item">${incident.created_by}</li>
-                <label><strong>CREATED ON: </strong></label><br>
-                <li class="list-group-item">${incident.created_on}</li>
-                <label><strong>STATUS: </strong></label><br>
-                <li class="list-group-item">${incident.status}
-                <br>
-                  <select name="status" id="edit_status">
-                      <option value="intervention">Under Investigation</option>
-                      <option value="red-flag">Rejected</option>
-                      <option value="red-flag">Resolved</option>
-                  </select>
-                <br>
-                </li>
-                <label><strong>TYPE OF INCIDENCE: </strong></label><br>
-                <li class="list-group-item">${incident.type}</li>
-                <label><strong>DESCRIPTION: </strong></label><br>
-                <li class="list-group-item">${incident.description}</li>
-                <label><strong>LOCATION: </strong></label><br>
-                <li class="list-group-item">${incident.location}</li>
+                <li class="list-group-item"><strong>INCIDENT ID: </strong>${incident.incident_id}</li>
+                <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
+                <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
+                <li class="list-group-item"><strong>TYPE OF INCIDENCE: </strong>${incident.type}</li>
+                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
+                <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
+                <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
             </ul>
             `;
         });
@@ -96,7 +81,7 @@ function updateStatus(e) {
   fetch(`https://issaireporterv2.herokuapp.com/api/v2/admin/${incidenttype}/${incident_id}/statusupdate`, {
       method: 'PATCH',
       body: JSON.stringify({
-        status: document.getElementById('edit_status').innerHTML,
+        status: document.getElementById('edit_status').value,
       }),
       headers: {
         'Authorization': 'Bearer ' + token,

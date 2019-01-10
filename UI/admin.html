@@ -51,9 +51,15 @@
                     <input id="incident_id" class="username" type="text" align="center" placeholder="Enter Incident ID"
                         required>
                 </div>
-                <div id="output5"></div>
                 <button id="find" class="button btn-green" align="center">Search for Incident</button><br>
-                <button id="editstatus" class="button btn-green">Update Status</button>
+                <div id="output5"></div><br>
+                <p class="sign" align="center"><strong>Change status to:</strong></p><br>
+                <select name="status" id="edit_status" class="username">
+                    <option value="Under Investigation">Under Investigation</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+                <button id="editstatus" class="button btn-red">Update Status</button>
             </form>
 
         </div>
