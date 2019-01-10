@@ -1,11 +1,9 @@
 document.getElementById('getallincidents').addEventListener('click', getIncidents);
 
-function getIncidents(e) {
-    e.preventDefault();
+function getIncidents(){
     fetch('https://issaireporterv2.herokuapp.com/api/v2/incidents')
         .then((res) => res.json())
         .then((data) => {
-            console.log(data)
             if (data.Error) {
                 alert(data.Error)
             } else {

@@ -8,7 +8,7 @@
     <title>User Account Page</title>
 </head>
 
-<body onload="getIncidents(), openPage('allIncidents',this)">
+<body onload="openPage('allIncidents',this), getIncidents()">
 
     <header>
         <nav class="navbar">
@@ -19,9 +19,9 @@
         </nav>
     </header>
     <div>
-        <button id="getallincidents" class="button btn-blue" onclick="openPage('allIncidents',this)"> All Incidents</button>
+        <button id="getallincidents" class="button btn-green" onclick="openPage('allIncidents',this)"> All Incidents</button>
         <button id="getusers" class="button btn-blue" onclick="openPage('allUsers',this)"> All Users</button>
-        <button class="button btn-blue" onclick="openPage('editStatus',this)"> Update Status</button>
+        <button class="button btn-red" onclick="openPage('editStatus',this)"> Update Incident Status</button>
 
     </div>
 
