@@ -8,7 +8,7 @@
     <title>User Account Page</title>
 </head>
 
-<body onload="getIncidents(), openPage('allIncidents',this)">
+<body onload="openPage('allIncidents',this), getIncidents()">
 
     <header>
         <nav class="navbar">
@@ -20,10 +20,11 @@
     </header>
     <div>
         <button id="getallincidents" class="button btn-blue" onclick="openPage('allIncidents',this)"> All Incidents</button>
-        <button class="button btn-blue" onclick="openPage('newIncident',this)"> New Incident</button>
+        <button class="button btn-green" onclick="openPage('newIncident',this)"> New Incident</button>
         <button class="button btn-blue" onclick="openPage('incidentbytype',this)"> Get Incidents By
             Type</button>
         <button class="button btn-blue" onclick="openPage('editIncident',this)"> Edit Incident</button>
+        <button class="button btn-red" onclick="openPage('deleteIncident',this)"> Delete Incident</button>
 
     </div>
 
@@ -80,7 +81,7 @@
 
     <section class="flex-container" id="editIncident">
         <div class="record-form">
-            <p class="sign" align="center"> <strong>Search for the Incident you want to edit using the parameters
+            <p class="sign" align="center"> <strong>Search for the Incident you want to EDIT using the parameters
                     provided.<br>
                     You can only edit the DESCRIPTION or LOCATION!</strong></p>
             <form>
@@ -97,13 +98,37 @@
                         required>
                 </div>
                 <div id="output2"></div>
-                <button id="findone" class="button btn-green" align="center">Search for Incident</button><br>
+                <button id="findone" class="button btn-blue" align="center">Search for Incident</button><br>
                 <button id="edit1" class="button btn-green">Update Description</button>
                 <button id="edit2" class="button btn-green">Update Location</button>
             </form>
 
         </div>
     </section>
+
+    <section class="flex-container" id="deleteIncident">
+            <div class="record-form">
+                <p class="sign" align="center"> <strong>Enter the parameters of the incident you want to DELETE.<br>
+                        CAUTION! THIS ACTION CANNOT BE UNDONE!</strong></p>
+                <form>
+                    <div>
+                        <label for="record type1"> <strong> Record Type: </strong> </label><br>
+                        <select name="record_type1" id="record_type1" class="username">
+                            <option value="intervention">Intervention</option>
+                            <option value="red-flag">Red-flag</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="incident_id1"> <strong>Incident ID:</strong> </label><br>
+                        <input id="incident_id1" class="username" type="text" align="center" placeholder="Enter Incident ID"
+                            required>
+                    </div>
+                    <div id="output2"></div>
+                    <button id="delete" class="button btn-red">Delete Description</button>
+                </form>
+    
+            </div>
+        </section>
 
     <footer>
         <p>@Issa</p>

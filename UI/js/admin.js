@@ -2,8 +2,7 @@ document.getElementById('getusers').addEventListener('click', getUsers);
 document.getElementById('find').addEventListener('click', admingetIncident);
 document.getElementById('editstatus').addEventListener('click', updateStatus);
 
-function getUsers(e) {
-  e.preventDefault();
+function getUsers() {
   let token = sessionStorage.getItem('token');
   fetch('https://issaireporterv2.herokuapp.com/api/v2/auth/signup', {
       method: 'GET',
@@ -13,7 +12,6 @@ function getUsers(e) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       if (data.Error) {
         alert(data.Error)
       } else {
@@ -50,7 +48,6 @@ function admingetIncident(e) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       if (data.Error) {
         alert(data.Error)
       } else if (data.message) {
@@ -104,11 +101,10 @@ function updateStatus(e) {
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
-      }
+        }
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       if (data[0].Message) {
         alert(data[0].Message)
       } else if (data.Error) {

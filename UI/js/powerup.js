@@ -3,7 +3,7 @@ document.getElementById('type').addEventListener('click', getIncidentsbyType);
 document.getElementById('findone').addEventListener('click', getIncident);
 document.getElementById('edit1').addEventListener('click', editDescription);
 document.getElementById('edit2').addEventListener('click', editLocation);
-
+document.getElementById('delete').addEventListener('click', deleteIcident);
 
 function postIncident(e) {
   e.preventDefault();
@@ -22,8 +22,7 @@ function postIncident(e) {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      if (data.Message == 'Record successfully saved!') {
+      if (data.Message) {
         alert(data.Message)
       } else {
         alert(data.Error)
@@ -43,7 +42,6 @@ function getIncidentsbyType(e) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       if (data.Error) {
         alert(data.Error)
       } else {
@@ -80,7 +78,6 @@ function getIncident(e) {
     })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       if (data.Error) {
         alert(data.Error)
       } else if (data.message) {
@@ -130,14 +127,13 @@ function editDescription(e) {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      if (data[0].Message == `Updated ${incidenttype} comment successfully!`) {
-        alert(data[0].Message)
-      } else if (data.Error) {
+      if (data.Error) {
         alert(data.Error)
-      } else {
+      } else if (data.message) {
         alert(data.message)
-      }
+      } else {
+        alert(data[0].Message)
+      } 
     })
 }
 
@@ -158,11 +154,34 @@ function editLocation(e) {
     })
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      if (data[0].Message == `Updated ${incidenttype} location successfully!`) {
-        alert(data[0].Message)
-      } else if (data.Error) {
+      if (data.Error) {
         alert(data.Error)
+      } else if (data.message) {
+        alert(data.message)
+      } else {
+        alert(data[0].Message)
+      } 
+    })
+}
+
+function deleteIcident(e) {
+  e.preventDefault();
+  let token = sessionStorage.getItem('token');
+  let incidenttype = document.getElementById('record_type1').value;
+  let incident_id = document.getElementById('incident_id1').value;
+  fetch(`https://issaireporterv2.herokuapp.com/api/v2/${incidenttype}/${incident_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.Error) {
+        alert(data.Error)
+      } else if (data.Message) {
+        alert(data.Message)
       } else {
         alert(data.message)
       }
