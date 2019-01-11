@@ -81,7 +81,7 @@ function getIncidentsbyStatus(e) {
       if (data.Error) {
         alert(data.Error)
       } else {
-        let output = `<h2 style="text-transform: uppercase;">${data[0].Data[0].status}s</h2>`;
+        let output = `<h2 style="text-transform: uppercase;">${data[0].Data[0].status}</h2>`;
         data[0].Data.forEach(function (incident) {
           output += `
             <ul class="list-group mb-3">
