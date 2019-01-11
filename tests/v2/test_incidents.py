@@ -20,7 +20,7 @@ class IncidentTests(BaseTest):
 
     def test_fail_getbyId(self):
         self.create_incident()
-        response = self.app.get('/api/v2/incidents/100', headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
+        response = self.app.get('/api/v2/redflag/100', headers={'Authorization': 'Bearer {}'.format(self.user1_token()),
                                                                   'content-type': 'application/json'})
         result = json.loads(response.data)
         self.assertEqual(result['Error'], 'Record not found!')
