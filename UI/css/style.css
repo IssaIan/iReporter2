@@ -1,23 +1,28 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
 body {
-    height: 125vh;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode';
-    margin: 0 auto 0 auto;
+    display: flex;
+    height: fit-content;
+    font-family: 'Lucida Sans';
     width: auto;
     text-align: center;
     color: rgb(153, 13, 4);
-    margin: 20px 0px 20px 0px;
-    margin-top: 80px;
-    padding: 30px;
+    margin: 0px 20px 20px 0px;
+    margin-top: 50px;
+    overflow-x: hidden;
 }
 
 header {
+    display: flex;
     background-color: white;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 80px;
-    display: flex;
     align-items: center;
     box-shadow: 0 0 25px 0 black;
 }
@@ -40,15 +45,18 @@ h1 {
 }
 
 footer {
-    background-image: linear-gradient(260deg, #041622 0%, #f88282 100%);
+    display: flex;
+    background-image: linear-gradient(260deg, #041622 0%, #f88282 80%);
     font-size: 18px;
     padding: 10px;
-    text-align: center;
+    justify-content: center;
     color: rgb(32, 5, 5);
-    position: unset;
+    position: fixed;
     width: 100%;
     bottom: 0px;
+    margin-block-start: 0%;
 }
+
 
 .button {
     display: inline-block;
@@ -81,12 +89,6 @@ footer {
 }
 
 
-@media (max-width: 430px) {
-    .button {
-        width: 95%;
-    }
-}
-
 .navbar-brand {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.7);
@@ -96,35 +98,37 @@ footer {
     display: inline-block;
     font-size: 22px;
     margin-top: 10px;
-    margin-left: 20px;
+    margin-left: 5px;
 }
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0;
-    height: 70px;
-    align-items: left;
-}
-
-.navbar-link {
-    margin-left: 40px;
-}
-
-.navbar-brand {
-    margin-top: 0;
-}
-
-.navbar {
-    font-size: 18px;
-    background-image: linear-gradient(260deg, #041622 0%, #f88282 100%);
+    font-size: 16px;
+    background-image: linear-gradient(260deg, #041622 0%, #f88282 60%);
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding-bottom: 10px;
 }
 
+@media screen and (min-width: 100px) {
+    .navbar {
+        display: -webkit-inline-box;
+        justify-content: end;
+        padding-bottom: 1px;
+        height: 70px;
+        width: 100%;
+    }
+
+    .navbar-link {
+        margin-left: 5px;
+    }
+
+    .navbar-brand {
+        margin-top: 2px;
+    }
+}
+
 .flex-container {
     color: rgb(8, 4, 4);
-    display: none;
+    display: flex;
     padding: 20px 20px;
     min-height: 400px;
     width: 100%;
