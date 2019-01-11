@@ -37,7 +37,7 @@
 
     <section class="flex-container" id="incidentbytype">
         <div class="record-form">
-            <form>
+            <form class="flag-form">
                 <div>
                     <label for="record type"> <strong> Record Type: </strong> </label><br>
                     <select name="record_type" id="record_type" class="username">
@@ -54,7 +54,7 @@
 
     <section class="flex-container" id="incidentbystatus">
         <div class="record-form">
-            <form>
+            <form class="flag-form">
                 <div>
                     <label for="status"> <strong> Status: </strong> </label><br>
                     <select name="status" id="status" class="username">
@@ -106,7 +106,7 @@
             <p class="sign" align="center"> <strong>Search for the Incident you want to EDIT using the parameters
                     provided.<br>
                     You can only edit the DESCRIPTION or LOCATION!</strong></p>
-            <form>
+            <form class="flag-form">
                 <div>
                     <label for="record type"> <strong> Record Type: </strong> </label><br>
                     <select name="record_type" id="record_type" class="username">
@@ -122,7 +122,7 @@
                 <button id="findone" class="button btn-blue" align="center">Search for Incident</button><br>
                 <div id="output2"></div>
                 <button id="edit1" class="button btn-green">Update Description</button>
-                <button id="edit2" class="button btn-green">Update Location</button>
+                <button id="edit2" class="button btn-yellow">Update Location</button>
             </form>
 
         </div>
@@ -132,7 +132,7 @@
             <div class="record-form">
                 <p class="sign" align="center"> <strong>Enter the parameters of the incident you want to DELETE.<br>
                         CAUTION! THIS ACTION CANNOT BE UNDONE!</strong></p>
-                <form>
+                <form class="flag-form">
                     <div>
                         <label for="record type1"> <strong> Record Type: </strong> </label><br>
                         <select name="record_type1" id="record_type1" class="username">
