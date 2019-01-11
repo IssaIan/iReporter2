@@ -4,14 +4,12 @@
     margin: 0;
 }
 body {
-    display: flex;
-    height: fit-content;
+    height: auto;
     font-family: 'Lucida Sans';
     width: auto;
     text-align: center;
     color: rgb(153, 13, 4);
-    margin: 0px 20px 20px 0px;
-    margin-top: 50px;
+    margin-top: 100px;
     overflow-x: hidden;
 }
 
@@ -147,7 +145,7 @@ footer {
 }
 
 .username {
-    width: 76%;
+    width: 70%;
     color: rgb(1, 6, 8);
     font-size: 14px;
     background: rgba(179, 12, 12, 0.04);
@@ -158,9 +156,9 @@ footer {
     box-sizing: border-box;
     border: 2px solid rgba(158, 6, 6, 0.02);
     margin-bottom: 50px;
-    margin-left: 46px;
+    margin-left: 15%; 
     text-align: center;
-    margin-bottom: 27px;
+    margin-bottom: 30px;
     font-family: 'Ubuntu', sans-serif;
 }
 .list-group {
