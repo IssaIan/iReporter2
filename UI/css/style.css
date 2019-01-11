@@ -99,22 +99,20 @@ footer {
     margin-left: 20px;
 }
 
-@media screen and (min-width: 300px) {
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 0;
-        height: 70px;
-        align-items: left;
-    }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 70px;
+    align-items: left;
+}
 
-    .navbar-link {
-        margin-left: 40px;
-    }
+.navbar-link {
+    margin-left: 40px;
+}
 
-    .navbar-brand {
-        margin-top: 0;
-    }
+.navbar-brand {
+    margin-top: 0;
 }
 
 .navbar {
