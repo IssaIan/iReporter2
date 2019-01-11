@@ -80,15 +80,6 @@ footer {
     background-color: rgb(223, 247, 8);
 }
 
-button a {
-    color: white;
-
-}
-
-.button-right {
-    float: right;
-    height: 50px;
-}
 
 @media (max-width: 430px) {
     .button {
@@ -101,7 +92,6 @@ button a {
     color: rgba(255, 255, 255, 0.7);
 }
 
-
 .navbar-brand {
     display: inline-block;
     font-size: 22px;
@@ -109,13 +99,13 @@ button a {
     margin-left: 20px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 300px) {
     .navbar {
         display: flex;
         justify-content: space-between;
         padding-bottom: 0;
         height: 70px;
-        align-items: center;
+        align-items: left;
     }
 
     .navbar-link {
