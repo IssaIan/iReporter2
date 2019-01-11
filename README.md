@@ -34,7 +34,7 @@ To install and run the project locally:
 | **PATCH**       | `/<incidenttype>/<int:incident_id>`                     | update incident records with given `incidenttype` and `incident_id`                   |
 |  **GET**        |  `/incidenttype/<int:incident_id>`                      | get list of all incidents, create incident                                            |
 | **GET**         | `/<incidenttype>`                                       | get list of incidents belonging to a user given `incidenttype`                  |
-| **GET**         | `/<status>`                                             | get list of incidents belonging to a user given `status`                        |
+| **GET**         | `incidents/<status>`                                    | get list of incidents belonging to a user given `status`                        |
 |  **POST**       |  `auth/signup`                                          | registers a new user                                                                  |
 |  **GET**        |  `/auth/signup`                                         | fetch all users(admin only)                                                           |
 | **POST**        | `/auth/login`                                           | login in a user                                                                       |
