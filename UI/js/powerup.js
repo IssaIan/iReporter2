@@ -70,7 +70,7 @@ function getIncidentsbyStatus(e) {
   e.preventDefault();
   let token = sessionStorage.getItem('token');
   let status = document.getElementById('status').value;
-  fetch(`https://issaireporterv2.herokuapp.com/api/v2/${status}`, {
+  fetch(`https://issaireporterv2.herokuapp.com/api/v2/incidents/${status}`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + token
