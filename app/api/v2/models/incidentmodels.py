@@ -1,4 +1,5 @@
 import re
+
 from db_config import Db
 
 
@@ -9,10 +10,10 @@ class IncidentModels(Db):
     def __init__(self):
         super().__init__()
 
-    def save_incident(self, created_by, typeofincident, description, location):
+    def save_incident(self, created_by, typeofincident, description, location, media_path):
         self.cursor.execute(
-            "INSERT INTO incidents(created_by, type, description, location)VALUES(%s, %s, %s, %s)",
-            (created_by, typeofincident, description, location))
+            "INSERT INTO incidents(created_by, type, description, location, media_path)VALUES(%s, %s, %s, %s, %s)",
+            (created_by, typeofincident, description, location, media_path))
         self.connect.commit()
 
     def get_all(self):
@@ -43,6 +44,13 @@ class IncidentModels(Db):
         self.cursor.execute(
             "UPDATE incidents SET description = '{}' WHERE incident_id = {} and created_by = {}".format(
                 comment, incident_id, user_id)
+        )
+        self.connect.commit()
+
+    def updatemedia(self, media_path, incident_id, user_id):
+        self.cursor.execute(
+            "UPDATE incidents SER media_path = '{}' WHERE incident_id = {} and created_by ={}".format(
+                media_path, incident_id, user_id)
         )
         self.connect.commit()
 

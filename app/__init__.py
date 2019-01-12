@@ -8,7 +8,6 @@ from flask_cors import CORS
 from instance.config import app_config
 from app.api.v2.routes import version_two as v2
 from db_config import Db
-from flask import jsonify
 
 
 def create_app(config_name):

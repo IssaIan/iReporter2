@@ -1,6 +1,6 @@
 import psycopg2
-from psycopg2.extras import RealDictCursor
 from flask import current_app
+from psycopg2.extras import RealDictCursor
 
 
 class Db:
@@ -33,6 +33,7 @@ class Db:
             description character varying (200) NOT NULL,
             status character varying(20) DEFAULT 'DRAFT',
             location character varying(50) NOT NULL,
+            media_path character varying(40),
             created_on timestamp with time zone DEFAULT ('now'::text):: date NOT NULL
         )"""
         queries = [users, incidents]

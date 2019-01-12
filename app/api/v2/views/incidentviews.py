@@ -1,10 +1,13 @@
 import smtplib
+import os
+
+from flask import jsonify, request, current_app
 from flask_restful import Resource, reqparse
-from flask import jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from werkzeug.utils import secure_filename
+
 from app.api.v2.models.incidentmodels import IncidentModels
 from app.api.v2.models.usermodels import UserModels
-
 
 parser = reqparse.RequestParser()
 parser.add_argument(
@@ -22,6 +25,7 @@ parser3.add_argument(
 parser4 = reqparse.RequestParser()
 parser4.add_argument(
     "status", type=str, required=True, help="Status field is required")
+update_media_parser = reqparse.RequestParser(bundle_errors=True)
 
 
 class Incidents(Resource):
@@ -39,6 +43,14 @@ class Incidents(Resource):
         typeofincident = data['typeofincident']
         description = data['description']
         location = data['location']
+        file = request.files['file']
+
+        if file:
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(
+                current_app.config['UPLOAD_FOLDER'], filename)
+            if not os.path.isdir(filepath)
+            file.save(filepath)
 
         resp = None
         if self.db.validate_comment(description) == False:
@@ -53,7 +65,7 @@ class Incidents(Resource):
             return jsonify(resp)
 
         self.db.save_incident(created_by, typeofincident,
-                              description, location)
+                              description, location, filepath)
         return {
             'Message': 'Record successfully saved!'
         }, 201
@@ -136,6 +148,7 @@ class Type(Resource):
             'Data': incident
         }, 200)
 
+
 class Status(Resource):
     """Handles fetching incidents by status in the system"""
 
@@ -217,6 +230,49 @@ class CommentUpdate(Resource):
         self.db.updatecomment(comment, incident_id, get_jwt_identity())
         return jsonify({
             'Message': 'Updated {} comment successfully!'.format(incidenttype),
+            'data': [
+                {
+                    "id": incident_id
+                }
+            ]
+        }, 200)
+
+
+class MediaUpdate(Resource):
+    """Handles media files uploads"""
+
+    def __init__(self):
+        self.db = IncidentModels()
+
+    @jwt_required
+    def patch(self, incidenttype, incident_id):
+
+        file = update_media_parser.parse_args()['file']
+
+        if file:
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(
+                current_app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+
+        incident = self.db.get_from_type_by_id(incidenttype, incident_id)
+        userincidents = self.db.get_by_user_id(get_jwt_identity(), incident_id)
+        if not incident:
+            return {
+                'Error': 'Record not found!'
+            }, 404
+        if incident[0]['status'] != 'DRAFT':
+            return {
+                'Error': 'Incident status already changed. You cannot update this incident!'
+            }, 403
+        if not userincidents:
+            return {
+                'Error': 'You cannot update an incident that does not belong to you!'
+            }, 401
+
+        self.db.updatemedia(filepath, incident_id, get_jwt_identity())
+        return jsonify({
+            'Message': 'Updated {} media successfully!'.format(incidenttype),
             'data': [
                 {
                     "id": incident_id
