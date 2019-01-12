@@ -49,7 +49,6 @@ class Incidents(Resource):
             filename = secure_filename(file.filename)
             filepath = os.path.join(
                 current_app.config['UPLOAD_FOLDER'], filename)
-            if not os.path.isdir(filepath)
             file.save(filepath)
 
         resp = None
