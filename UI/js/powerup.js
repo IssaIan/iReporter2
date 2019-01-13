@@ -2,9 +2,8 @@ document.getElementById('post').addEventListener('click', postIncident);
 document.getElementById('type').addEventListener('click', getIncidentsbyType);
 document.getElementById('getstatus').addEventListener('click', getIncidentsbyStatus);
 document.getElementById('findone').addEventListener('click', getIncident);
-document.getElementById('edit1').addEventListener('click', editDescription);
-document.getElementById('edit2').addEventListener('click', editLocation);
 document.getElementById('delete').addEventListener('click', deleteIcident);
+
 
 function postIncident(e) {
   e.preventDefault();
@@ -130,8 +129,10 @@ function getIncident(e) {
                 <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
                 <label><strong>DESCRIPTION: </strong></label><br>
                 <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
+                <button class="button btn-green" onclick="editDescription()">Update Description</button>
                 <label><strong>LOCATION: </strong></label><br>
                 <li id="edit_location" class="list-group-item" contenteditable="true">${incident.location}</li>
+                <button id="edit2" class="button btn-yellow" onclick="editLocation()">Update Location</button>
             </ul>
             `;
         });
@@ -141,8 +142,7 @@ function getIncident(e) {
     })
 }
 
-function editDescription(e) {
-  e.preventDefault();
+function editDescription() {
   let token = sessionStorage.getItem('token');
   let incidenttype = document.getElementById('record_type').value;
   let incident_id = document.getElementById('incident_id').value;
@@ -164,7 +164,7 @@ function editDescription(e) {
         alert(data.message)
       } else {
         alert(data[0].Message)
-      } 
+      }
     })
 }
 
@@ -191,7 +191,7 @@ function editLocation(e) {
         alert(data.message)
       } else {
         alert(data[0].Message)
-      } 
+      }
     })
 }
 
