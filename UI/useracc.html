@@ -74,7 +74,7 @@
     <section class="flex-container" id="newIncident">
         <div class="record-form">
             <p class="sign" align="center"> <strong>CREATE NEW INCIDENT</strong></p>
-            <form class="flag-form">
+            <form class="flag-form" id="new">
                 <div>
                     <label for="record type"> <strong> Record Type: </strong> </label><br>
                     <select name="record_type" id="record_type" class="username">
@@ -93,8 +93,8 @@
                         required><br>
                 </div>
                 <div>
-                    <label for="image"> <strong>Image or Video:</strong> </label><br>
-                    <input id="media" class="username" type="file" align="center" accept="Image/*,Video/*">
+                    <label for="media"> <strong>Image or Video:</strong> </label><br>
+                    <input  id="media" class="username" type="file" align="center" accept="Image/*,Video/*">
                 </div>
                 <button id="post" class="button btn-green" align="center">Submit</button>
             </form>

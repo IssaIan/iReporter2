@@ -8,16 +8,18 @@ document.getElementById('delete').addEventListener('click', deleteIcident);
 function postIncident(e) {
   e.preventDefault();
   let token = sessionStorage.getItem('token');
+  let formdata = new FormData();
+  formdata.append('typeofincident', document.getElementById('record_type').value);
+  formdata.append('description', document.getElementById('description').value);
+  formdata.append('location', document.getElementById('location').value);
+  let file = document.getElementById('media').file;
+  formdata.append('file', file) 
   fetch('https://issaireporterv2.herokuapp.com/api/v2/incidents', {
       method: 'POST',
-      body: JSON.stringify({
-        typeofincident: document.getElementById('record_type').value,
-        description: document.getElementById('description').value,
-        location: document.getElementById('location').value
-      }),
+      body: formdata,
       headers: {
         'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
       }
     })
     .then(res => res.json())
