@@ -1,9 +1,9 @@
-from flask_restful import Resource, reqparse
 from flask import jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_restful import Resource, reqparse
 from werkzeug.security import generate_password_hash
-from app.api.v2.models.usermodels import UserModels
 
+from app.api.v2.models.usermodels import UserModels
 
 parser = reqparse.RequestParser()
 parser.add_argument("first_name", type=str, required=True,

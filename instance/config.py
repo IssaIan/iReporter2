@@ -6,7 +6,7 @@ class Config(object):
     CSRF_ENABLED = True
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=12)
-   
+    UPLOAD_FOLDER = "upload"
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
