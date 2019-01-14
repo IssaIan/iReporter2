@@ -46,6 +46,8 @@ class Incidents(Resource):
         file = request.files['file']
 
         filename = secure_filename(file.filename)
+        if not os.path.isdir(current_app.config['UPLOAD_FOLDER']):
+            os.mkdir(current_app.config['UPLOAD_FOLDER'])
         filepath = os.path.join(
             current_app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
@@ -249,6 +251,8 @@ class MediaUpdate(Resource):
 
         if file:
             filename = secure_filename(file.filename)
+            if not os.path.isdir(current_app.config['UPLOAD_FOLDER']):
+                os.mkdir(current_app.config['UPLOAD_FOLDER'])
             filepath = os.path.join(
                 current_app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
