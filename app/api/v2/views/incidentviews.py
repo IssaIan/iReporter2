@@ -25,7 +25,6 @@ parser3.add_argument(
 parser4 = reqparse.RequestParser()
 parser4.add_argument(
     "status", type=str, required=True, help="Status field is required")
-update_media_parser = reqparse.RequestParser(bundle_errors=True)
 
 
 class Incidents(Resource):
@@ -247,7 +246,7 @@ class MediaUpdate(Resource):
     @jwt_required
     def patch(self, incidenttype, incident_id):
 
-        file = update_media_parser.parse_args()['file']
+        file = request.files['file']
 
         if file:
             if not os.path.isdir(current_app.config['UPLOAD_FOLDER']):
