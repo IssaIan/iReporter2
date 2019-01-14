@@ -230,57 +230,6 @@ class CommentUpdate(Resource):
         }, 200)
 
 
-class MediaUpdate(Resource):
-    """Handles media files uploads"""
-
-    def __init__(self):
-        self.db = IncidentModels()
-
-    @jwt_required
-    def patch(self, incidenttype, incident_id):
-
-        file = update_media_parser.parse_args()['file']
-
-        if file:
-            if not os.path.isdir(current_app.config['UPLOAD_FOLDER']):
-                os.mkdir(current_app.config['UPLOAD_FOLDER'])
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(
-                current_app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
-
-            incident = self.db.get_from_type_by_id(incidenttype, incident_id)
-            userincidents = self.db.get_by_user_id(
-                get_jwt_identity(), incident_id)
-            if not incident:
-                return {
-                    'Error': 'Record not found!'
-                }, 404
-            if incident[0]['status'] != 'DRAFT':
-                return {
-                    'Error': 'Incident status already changed. You cannot update this incident!'
-                }, 403
-            if not userincidents:
-                return {
-                    'Error': 'You cannot update an incident that does not belong to you!'
-                }, 401
-
-            self.db.updatemedia(filepath, incident_id, get_jwt_identity())
-            return jsonify({
-                'Message': 'Updated {} media successfully!'.format(incidenttype),
-                'data': [
-                    {
-                        "id": incident_id
-                    }
-                ]
-            }, 200)
-
-        else:
-            return {
-                'Error': "No image or video selected!"
-            }, 404
-
-
 class Admin(Resource):
     """Handles admin user functionality. Allows the admin user to
     update incident status. A real time email notification is sent to the user
