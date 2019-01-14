@@ -10,10 +10,10 @@ class IncidentModels(Db):
     def __init__(self):
         super().__init__()
 
-    def save_incident(self, created_by, typeofincident, description, location):
+    def save_incident(self, created_by, typeofincident, description, location, media_path):
         self.cursor.execute(
-            "INSERT INTO incidents(created_by, type, description, location)VALUES(%s, %s, %s, %s)",
-            (created_by, typeofincident, description, location))
+            "INSERT INTO incidents(created_by, type, description, location media_path)VALUES(%s, %s, %s, %s, %s)",
+            (created_by, typeofincident, description, location, media_path))
         self.connect.commit()
 
     def get_all(self):

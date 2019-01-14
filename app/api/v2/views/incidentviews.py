@@ -43,6 +43,14 @@ class Incidents(Resource):
         typeofincident = data['typeofincident']
         description = data['description']
         location = data['location']
+        file = request.files['file']
+
+        if not os.path.isdir(current_app.config['UPLOAD_FOLDER']):
+            os.mkdir(current_app.config['UPLOAD_FOLDER'])
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(
+            current_app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
 
         resp = None
         if self.db.validate_comment(description) == False:
@@ -57,7 +65,7 @@ class Incidents(Resource):
             return jsonify(resp)
 
         self.db.save_incident(created_by, typeofincident,
-                              description, location)
+                              description, location, filepath)
         return {
             'Message': 'Record successfully saved!'
         }, 201
