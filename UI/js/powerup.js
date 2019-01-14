@@ -122,18 +122,25 @@ function getIncident(e) {
         let output = `<h2>Incident to be Updated</h2>`;
         data[0].Data.forEach(function (incident) {
           output += `
-            <ul class="list-group mb-3">
+          <ul class="list-group mb-3">
                 <li class="list-group-item"><strong>INCIDENT ID: </strong>${incident.incident_id}</li>
                 <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
                 <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
                 <li class="list-group-item"><strong>TYPE OF INCIDENCE: </strong>${incident.type}</li>
-                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
-                <label><strong>DESCRIPTION: </strong></label><br>
+                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li><br>
+                <li class="list-group-item"><strong>LOCATION: </strong>${incident.media_path}</li>
+                <label><strong>DESCRIPTION: </strong></label><br><p>Click to edit</p><br>
                 <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
-                <button class="button btn-green" onclick="editDescription()">Update Description</button>
-                <label><strong>LOCATION: </strong></label><br>
+                <button class="button btn-green" onclick="editDescription()">Update Description</button><br>
+                <label><strong>LOCATION: </strong></label><br><p>Click to edit</p><br>
                 <li id="edit_location" class="list-group-item" contenteditable="true">${incident.location}</li>
-                <button id="edit2" class="button btn-yellow" onclick="editLocation()">Update Location</button>
+                <button id="edit2" class="button btn-yellow" onclick="editLocation()">Update Location</button><br>
+                <li class="list-group-item"><div>
+                <label for="media"><strong>Edit Image or Video:</strong> </label><br>
+                <input  id="media" class="username" type="file" align="center" accept="Image/*,Video/*">
+                </div>
+                <button id="edit3" class="button btn-yellow" onclick="uploadMedia()">Upload</button>
+                </li>
             </ul>
             `;
         });
@@ -216,6 +223,30 @@ function deleteIcident(e) {
         alert(data.Message)
       } else {
         alert(data.message)
+      }
+    })
+}
+
+function uploadMedia(){
+  let token = sessionStorage.getItem('token');
+  let incidenttype = document.getElementById('record_type').value;
+  let incident_id = document.getElementById('incident_id').value;
+  let formdata = new FormData();
+  formdata.append('file', document.getElementById("media").files[0]); 
+  fetch(`https://issaireporterv2.herokuapp.com/api/v2/${incidenttype}/${incident_id}/media`, {
+      method: 'PATCH',
+      body: formdata,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      if (data.Message) {
+        alert(data.Message)
+      } else {
+        alert(data.Error)
       }
     })
 }
