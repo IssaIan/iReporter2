@@ -9,21 +9,20 @@ function postIncident(e) {
   e.preventDefault();
   let token = sessionStorage.getItem('token');
   let formdata = new FormData();
-  formdata.append('typeofincident', document.getElementById('record_type').value);
-  formdata.append('description', document.getElementById('description').value);
-  formdata.append('location', document.getElementById('location').value);
-  let file = document.getElementById('media').file;
-  formdata.append('file', file) 
+  formdata.append("typeofincident", document.getElementById('record_type').value);
+  formdata.append("description", document.getElementById('description').value);
+  formdata.append("location", document.getElementById('location').value);
+  formdata.append('file', document.getElementById("media").files[0]); 
   fetch('https://issaireporterv2.herokuapp.com/api/v2/incidents', {
       method: 'POST',
       body: formdata,
       headers: {
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
       }
     })
     .then(res => res.json())
     .then(data => {
+      console.log(data)
       if (data.Message) {
         alert(data.Message)
       } else {
