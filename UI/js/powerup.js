@@ -127,8 +127,8 @@ function getIncident(e) {
                 <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
                 <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
                 <li class="list-group-item"><strong>TYPE OF INCIDENCE: </strong>${incident.type}</li>
-                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li><br>
-                <li class="list-group-item"><strong>LOCATION: </strong>${incident.media_path}</li>
+                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
+                <li class="list-group-item"><strong>IMAGE URL: </strong>${incident.media_path}</li><br><br>
                 <label><strong>DESCRIPTION: </strong></label><br><p>Click to edit</p><br>
                 <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
                 <button class="button btn-green" onclick="editDescription()">Update Description</button><br>
