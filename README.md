@@ -8,6 +8,8 @@
 This is a version 2 of the iReporter app which uses databases.
 iReporter is a digital platform for citizens to report corruption cases to relevant authorities. Users can also report on things that need government intervention.
 
+Click [HERE](https://issaian.github.io/iReporter2/#) to access iReporter
+
 Click [HERE](https://ireporter7.docs.apiary.io/#) to view the API documentation
 
 Click [HERE](https://issaireporterv2.herokuapp.com/) to view the app on HEROKU
