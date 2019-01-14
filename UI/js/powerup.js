@@ -137,7 +137,7 @@ function getIncident(e) {
                 <button id="edit2" class="button btn-yellow" onclick="editLocation()">Update Location</button><br>
                 <li class="list-group-item"><div>
                 <label for="media"><strong>Edit Image or Video:</strong> </label><br>
-                <input  id="media" class="username" type="file" align="center" accept="Image/*,Video/*">
+                <input  id="media2" class="username" type="file" align="center" accept="Image/*,Video/*">
                 </div>
                 <button id="edit3" class="button btn-yellow" onclick="uploadMedia()">Upload</button>
                 </li>
@@ -232,7 +232,7 @@ function uploadMedia(){
   let incidenttype = document.getElementById('record_type').value;
   let incident_id = document.getElementById('incident_id').value;
   let formdata = new FormData();
-  formdata.append('file', document.getElementById("media").files[0]); 
+  formdata.append('file', document.getElementById("media2").files[0]); 
   fetch(`https://issaireporterv2.herokuapp.com/api/v2/${incidenttype}/${incident_id}/media`, {
       method: 'PATCH',
       body: formdata,
@@ -243,8 +243,8 @@ function uploadMedia(){
     .then(res => res.json())
     .then(data => {
       console.log(data)
-      if (data.Message) {
-        alert(data.Message)
+      if (data[0].Message) {
+        alert(data[0].Message)
       } else {
         alert(data.Error)
       }
