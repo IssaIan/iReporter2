@@ -12,7 +12,7 @@ class IncidentModels(Db):
 
     def save_incident(self, created_by, typeofincident, description, location, media_path):
         self.cursor.execute(
-            "INSERT INTO incidents(created_by, type, description, location media_path)VALUES(%s, %s, %s, %s, %s)",
+            "INSERT INTO incidents(created_by, type, description, location, media_path)VALUES(%s, %s, %s, %s, %s)",
             (created_by, typeofincident, description, location, media_path))
         self.connect.commit()
 
