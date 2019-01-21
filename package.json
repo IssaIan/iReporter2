@@ -1,0 +1,30 @@
+{
+  "name": "iReporter2",
+  "version": "1.0.0",
+  "description": "This is a version 2 of the iReporter which uses databases",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IssaIan/iReporter2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IssaIan/iReporter2/issues"
+  },
+  "homepage": "https://github.com/IssaIan/iReporter2#readme",
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "jest-fetch-mock": "^2.1.0"
+  }, 
+  "jest": {
+    "automock": false
+  }
+}
