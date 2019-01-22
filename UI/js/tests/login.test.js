@@ -1,25 +1,21 @@
 const puppeteer = require('puppeteer');
+const assert = require('assert');
+
 
 
 let browser
 let page
 
-beforeAll(async () => {
-    // launch browser
 
-    browser = await puppeteer.launch(
-        {
-            headless: false,
-            args:['--no-sandbox'],
-            slowMo: 250,
-        }
-    )
+beforeEach(async () => {
+    // launch browser
+    browser = await puppeteer.launch()
     // creates a new page in the opened browser
     page = await browser.newPage()
-})
+  });
 
-describe('Login', ()=> {
-    test('user login redirects to user account', async () =>{
+describe('Login', () => {
+    it('user can login', async () =>{
         await page.goto('https://issaian.github.io/iReporter2/UI/usignin.html');
         await page.waitForSelector('.login');
 
@@ -31,14 +27,16 @@ describe('Login', ()=> {
         
         await page.click('input[type=submit]');
 
-        expect(window.alert).toBe("Welcome admin. You are now logged in!")
-
+        await page.on('dialog', dialog => {
+            assert.equal(dialog.message(), 'Welcome admin. You are now logged in!');
+            dialog.accept();
+        })
     }, 9000000);
     
 });
 
-describe('Invalid login credentials', ()=> {
-    test('Test wrong username returns an error', async () =>{
+describe('Invalid login credentials', () => {
+    it('Test wrong username returns an error', async () =>{
         await page.goto('https://issaian.github.io/iReporter2/UI/usignin.html');
         await page.waitForSelector('.login');
 
@@ -48,14 +46,17 @@ describe('Invalid login credentials', ()=> {
         await page.click('input[id=password]');
         await page.type('input[id=password]', 'cufubbcinrcur');
         
-        await page.click('input[type=submit]')
+        await page.click('input[type=submit]');
 
-        expect(window.alert).toBe("No user with that username found!");
+        await page.on('dialog', dialog => {
+            assert.equal(dialog.message(), 'No user with that username found!');
+            dialog.accept();
+        });
 
     }, 9000000);
     
 });
 
-afterAll(() => {
-    browser.close()
-})
+afterEach( async () => {
+    await browser.close();
+  });
