@@ -22,7 +22,7 @@ class Db:
             username character varying(100) NOT NULL,
             email character varying(100) NOT NULL,
             date_created timestamp with time zone DEFAULT ('now'::text):: date NOT NULL,
-            phonenumber character varying(10) NOT NULL,
+            phonenumber character varying(30) NOT NULL,
             password character varying(150) NOT NULL,
             is_admin BOOLEAN DEFAULT FALSE
             )"""
@@ -33,7 +33,7 @@ class Db:
             description character varying (200) NOT NULL,
             status character varying(20) DEFAULT 'DRAFT',
             location character varying(50) NOT NULL,
-            media_path character varying(40),
+            media_path character varying(100),
             created_on timestamp with time zone DEFAULT ('now'::text):: date NOT NULL
         )"""
         queries = [users, incidents]

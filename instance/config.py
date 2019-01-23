@@ -7,6 +7,9 @@ class Config(object):
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=12)
     UPLOAD_FOLDER = "upload"
+    CLOUDINARY_CLOUD_NAME = os.getenv('CLOUDINARY_CLOUD_NAME')
+    CLOUDINARY_API_KEY = os.getenv('CLOUDINARY_API_KEY') 
+    CLOUDINARY_API_SECRET = os.getenv('CLOUDINARY_API_SECRET')
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
