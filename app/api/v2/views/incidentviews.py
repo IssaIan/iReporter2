@@ -1,9 +1,12 @@
-import smtplib
 import os
+import smtplib
 
-from flask import jsonify, request, current_app
-from flask_restful import Resource, reqparse
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
+from flask import current_app, jsonify, request
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_restful import Resource, reqparse
 from werkzeug.utils import secure_filename
 
 from app.api.v2.models.incidentmodels import IncidentModels
@@ -37,6 +40,12 @@ class Incidents(Resource):
     @jwt_required
     def post(self):
 
+        cloudinary.config(
+        cloud_name = current_app.config['CLOUDINARY_CLOUD_NAME'],
+        api_key = current_app.config['CLOUDINARY_API_KEY'],
+        api_secret = current_app.config['CLOUDINARY_API_SECRET']
+        )
+
         data = parser.parse_args()
         created_by = get_jwt_identity()
         typeofincident = data['typeofincident']
@@ -51,6 +60,9 @@ class Incidents(Resource):
             current_app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
+        res = cloudinary.uploader.upload_large(filename, resource_type = "auto")
+        genurl = res['secure_url']
+
         resp = None
         if self.db.validate_comment(description) == False:
             resp = {'Error': 'Comment cannot contain special characters!'}
@@ -64,7 +76,7 @@ class Incidents(Resource):
             return jsonify(resp)
 
         self.db.save_incident(created_by, typeofincident,
-                              description, location, filepath)
+                              description, location, genurl)
         return {
             'Message': 'Record successfully saved!'
         }, 201
