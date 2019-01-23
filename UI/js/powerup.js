@@ -56,7 +56,8 @@ function getIncidentsbyType(e) {
             <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
             <li class="list-group-item"><strong>TYPE OF INCIDENT: </strong>${incident.type}</li>
             <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
-            <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
+            <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li><br>
+            <img align="center" src="${incident.media_path}" alt="Incident image" width="200" height="200"> 
             </ul>
             `;
         });
@@ -91,7 +92,8 @@ function getIncidentsbyStatus(e) {
             <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
             <li class="list-group-item"><strong>TYPE OF INCIDENT: </strong>${incident.type}</li>
             <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
-            <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
+            <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li><br>
+            <img align="center" src="${incident.media_path}" alt="Incident image" width="200" height="200"> 
             </ul>
             `;
         });
@@ -127,8 +129,8 @@ function getIncident(e) {
                 <li class="list-group-item"><strong>CREATED BY: </strong>${incident.created_by}</li>
                 <li class="list-group-item"><strong>CREATED ON: </strong>${incident.created_on}</li>
                 <li class="list-group-item"><strong>TYPE OF INCIDENCE: </strong>${incident.type}</li>
-                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
-                <li class="list-group-item"><strong>IMAGE URL: </strong>${incident.media_path}</li><br><br>
+                <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li><br>
+                <img align="center" src="${incident.media_path}" alt="Incident image" width="200" height="200"><br> 
                 <label><strong>DESCRIPTION: </strong></label><br><p>Click to edit</p><br>
                 <li id="edit_description" class="list-group-item" contenteditable="true">${incident.description}</li>
                 <button class="button btn-green" onclick="editDescription()">Update Description</button><br>
