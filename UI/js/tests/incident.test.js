@@ -20,28 +20,31 @@ beforeEach(async () => {
     page = await browser.newPage()
 })
 
+describe('All incidents', () => {
+    it('user can view all incidents', async () =>{
+        await page.goto('https://issaian.github.io/iReporter2/UI/useracc.html');
+        page.on('dialog', dialog => {
+            expect(dialog.mesage()).toBe('Records returned successfully')
+            dialog.accept();});
+
+    })
+})
+
 describe('Create incident', ()=> {
     it('user can create an incident', async () =>{
         await page.goto('https://issaian.github.io/iReporter2/UI/useracc.html');
-        
         page.on('dialog', dialog => {
-            dialog.accept();})
+            dialog.accept();});
         await page.click('button[id=createincident]');
 
         await page.waitForSelector('.flag-form');
-
-        await page.click('select[id=record_type]');
-        await page.select('option[id=red-flag]');
 
         await page.click('input[id=description]');
         await page.type('input[id=description]', incident.description);
 
         await page.click('input[id=location]');
 
-        await page.click('input[id=media]');
-        await page.file('input[id=media]', incident.media);
-
-        await page.click('input[type=submit]');
+        await page.click('button[id=post]');
 
     }, 9000000);
     
