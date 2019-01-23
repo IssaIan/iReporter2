@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/IssaIan/iReporter2#readme",
   "devDependencies": {
+    "coveralls": "^3.0.2",
+    "faker": "^4.1.0",
     "jest": "^23.6.0",
-    "jest-fetch-mock": "^2.1.0"
+    "puppeteer": "^1.11.0"
   }, 
   "jest": {
     "automock": false
