@@ -1,19 +1,23 @@
 const puppeteer = require('puppeteer');
+const faker = require('faker');
+
 
 
 let browser
 let page
 
+const user = {
+    first_name:faker.name.firstName(),
+    last_name:faker.name.lastName(),
+    username:faker.name.lastName(),
+    email:faker.internet.email(),
+    phonenumber:faker.phone.phoneNumber()
+  };
+
 beforeAll(async () => {
     // launch browser
 
-    browser = await puppeteer.launch(
-        {
-            headless: false,
-            args:['--no-sandbox'],
-            slowMo: 250,
-        }
-    )
+    browser = await puppeteer.launch()
     // creates a new page in the opened browser
     page = await browser.newPage()
 })
@@ -24,19 +28,19 @@ describe('Sign up', ()=> {
         await page.waitForSelector('.sign-up');
 
         await page.click('input[id=first_name]');
-        await page.type('input[id=first_name]', 'issa');
+        await page.type('input[id=first_name]', user.first_name);
 
         await page.click('input[id=last_name]');
-        await page.type('input[id=last_name]', 'mwangi');
+        await page.type('input[id=last_name]', user.last_name);
 
         await page.click('input[id=username]');
-        await page.type('input[id=username]', 'adminissa');
+        await page.type('input[id=username]', user.username);
 
         await page.click('input[id=email]');
-        await page.type('input[id=email]', 'issaadmin@gmail.com');
+        await page.type('input[id=email]', user.email);
 
         await page.click('input[id=phonenumber]');
-        await page.type('input[id=phonenumber]', '0712376546');
+        await page.type('input[id=phonenumber]', user.phonenumber);
 
         await page.click('input[id=password]');
         await page.type('input[id=password]', 'Maina9176');
@@ -46,8 +50,14 @@ describe('Sign up', ()=> {
         
         await page.click('input[type=submit]');
 
-        expect(window.alert).toBe("User saved successfully")
+        page.on('dialog', dialog => {
+            expect(dialog.message()).toBe('User saved successfully')
+            dialog.accept();})
 
     }, 9000000);
     
 });
+
+afterEach(async () => {
+    await browser.close()
+})
