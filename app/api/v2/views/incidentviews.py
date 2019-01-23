@@ -60,8 +60,8 @@ class Incidents(Resource):
             current_app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        res = cloudinary.uploader.upload_large(filename, resource_type = "auto")
-        genurl = res['secure_url']
+        cloudinary.uploader.upload(filepath, public_id = filename)
+        url = cloudinary.utils.cloudinary_url(filename)
 
         resp = None
         if self.db.validate_comment(description) == False:
@@ -76,7 +76,7 @@ class Incidents(Resource):
             return jsonify(resp)
 
         self.db.save_incident(created_by, typeofincident,
-                              description, location, genurl)
+                              description, location, url[0])
         return {
             'Message': 'Record successfully saved!'
         }, 201
