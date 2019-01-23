@@ -1,5 +1,8 @@
 # iReporter
 
+[![Build Status](https://travis-ci.org/IssaIan/iReporter2.svg?branch=gh-pages)](https://travis-ci.org/IssaIan/iReporter2)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest) [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
+
 iReporter is a digital platform for citizens to report corruption cases to relevant authorities. Users can also report on things that need government intervention.
 
 Click [HERE](https://issaian.github.io/iReporter2/#) to access iReporter
