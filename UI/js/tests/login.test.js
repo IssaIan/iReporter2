@@ -36,6 +36,11 @@ describe('Login', ()=> {
 describe('Invalid login credentials', ()=> {
     it('Test wrong username returns an error', async () =>{
         await page.goto('https://issaian.github.io/iReporter2/UI/usignin.html');
+
+        page.on('dialog', dialog => {
+            expect(dialog.message()).toBe('No user with that username found!')
+            dialog.accept();});
+            
         await page.waitForSelector('.login');
 
         await page.click('input[id=username]');
@@ -45,10 +50,6 @@ describe('Invalid login credentials', ()=> {
         await page.type('input[id=password]', 'cufubbcinrcur');
         
         await page.click('input[type=submit]');
-
-        page.on('dialog', dialog => {
-            expect(dialog.message()).toBe('No user with that username found!')
-            dialog.accept();})
 
     }, 9000000);
     
