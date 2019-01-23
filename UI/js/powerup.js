@@ -138,8 +138,8 @@ function getIncident(e) {
                 <li id="edit_location" class="list-group-item" contenteditable="true">${incident.location}</li>
                 <button id="edit2" class="button btn-yellow" onclick="editLocation()">Update Location</button><br>
                 <li class="list-group-item"><div>
-                <label for="media"><strong>Edit Image or Video:</strong> </label><br>
-                <input  id="media2" class="username" type="file" align="center" accept="Image/*,Video/*">
+                <label for="media"><strong>Update Image:</strong> </label><br>
+                <input  id="media2" class="username" type="file" align="center" accept="Image/*">
                 </div>
                 <button id="edit3" class="button btn-yellow" onclick="uploadMedia()">Upload</button>
                 </li>
