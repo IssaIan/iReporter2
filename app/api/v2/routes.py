@@ -3,7 +3,7 @@ from flask_restful import Api
 
 from app.api.v2.views.incidentviews import (Admin, CommentUpdate, Incident,
                                             Incidents, LocationUpdate, Status,
-                                            Type, MediaUpdate)
+                                            Type)
 from app.api.v2.views.userviews import Login, Users
 
 version_two = Blueprint('api_v2', __name__, url_prefix='/api/v2')
