@@ -43,6 +43,9 @@ h1 {
     font-size: 1em;
 }
 
+img {
+    width: 100%;
+}
 footer {
     display: flex;
     background-image: linear-gradient(260deg, #041622 0%, #f88282 80%);
