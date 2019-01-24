@@ -7,7 +7,7 @@ function getIncidents(){
             if (data.Error) {
                 alert(data.Error)
             } else {
-                let output = `<h2>These are all the incidents the have been reported:</h2>`;
+                let output = `<h2>These are all the incidents that have been reported in iReporter:</h2>`;
                 data[0].Data.forEach(function (incident) {
                     output += `
               <ul class="list-group mb-3">
