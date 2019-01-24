@@ -207,26 +207,29 @@ function editLocation(e) {
 
 function deleteIcident(e) {
   e.preventDefault();
-  let token = sessionStorage.getItem('token');
-  let incidenttype = document.getElementById('record_type1').value;
-  let incident_id = document.getElementById('incident_id1').value;
-  fetch(`https://issaireporterv2.herokuapp.com/api/v2/${incidenttype}/${incident_id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+  let confirmdelete = confirm("Are you sure you want to DELETE this incident?");
+  if (confirmdelete == true){
+    let token = sessionStorage.getItem('token');
+    let incidenttype = document.getElementById('record_type1').value;
+    let incident_id = document.getElementById('incident_id1').value;
+    fetch(`https://issaireporterv2.herokuapp.com/api/v2/${incidenttype}/${incident_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.Error) {
+          alert(data.Error)
+        } else if (data.Message) {
+          alert(data.Message)
+        } else {
+          alert(data.message)
       }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.Error) {
-        alert(data.Error)
-      } else if (data.Message) {
-        alert(data.Message)
-      } else {
-        alert(data.message)
-      }
-    })
+    }) 
+  }
 }
 
 function uploadMedia(){
