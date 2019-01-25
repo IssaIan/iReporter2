@@ -287,7 +287,7 @@ class MediaUpdate(Resource):
                     'Error': 'You cannot update an incident that does not belong to you!'
                 }, 401
 
-            self.db.updatemedia(url, incident_id, get_jwt_identity())
+            self.db.updatemedia(url[0], incident_id, get_jwt_identity())
             return jsonify({
                 'Message': 'Updated {} media successfully!'.format(incidenttype),
                 'data': [

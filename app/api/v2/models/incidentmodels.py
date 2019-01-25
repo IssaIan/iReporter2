@@ -49,7 +49,7 @@ class IncidentModels(Db):
 
     def updatemedia(self, media_path, incident_id, user_id):
         self.cursor.execute(
-            "UPDATE incidents SET media_path = {} WHERE incident_id = {} and created_by ={}".format(
+            "UPDATE incidents SET media_path = '{}' WHERE incident_id = {} and created_by ={}".format(
                 media_path, incident_id, user_id)
         )
         self.connect.commit()
