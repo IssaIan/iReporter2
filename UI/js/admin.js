@@ -64,6 +64,7 @@ function admingetIncident(e) {
                 <li class="list-group-item"><strong>STATUS: </strong>${incident.status}</li>
                 <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
                 <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
+                <li class="list-group-item"><img src="${incident.media_path}.png" alt="Incident image" width="800" height="500"></li> 
             </ul>
             `;
         });
@@ -86,7 +87,7 @@ function updateStatus(e) {
       headers: {
         'Authorization': 'Bearer ' + token,
         'Content-Type': 'application/json'
-        }
+      }
     })
     .then(res => res.json())
     .then(data => {
