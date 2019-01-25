@@ -24,7 +24,7 @@ function getUsers() {
                       <li class="list-group-item"><strong>LAST NAME: </strong>${user.last_name}</li>
                       <li class="list-group-item"><strong>USERNAME: </strong>${user.username}</li>
                       <li class="list-group-item"><strong>EMAIL: </strong>${user.email}</li>
-                      <li class="list-group-item"><strong>PHONE NUMBER: </strong>0${user.phonenumber}</li>
+                      <li class="list-group-item"><strong>PHONE NUMBER: </strong>${user.phonenumber}</li>
                   </ul>
                   `;
         });
