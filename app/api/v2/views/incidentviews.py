@@ -268,6 +268,9 @@ class MediaUpdate(Resource):
                 current_app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
 
+            cloudinary.uploader.upload(filepath, public_id = filename)
+            url = cloudinary.utils.cloudinary_url(filename)
+
             incident = self.db.get_from_type_by_id(incidenttype, incident_id)
             userincidents = self.db.get_by_user_id(
                 get_jwt_identity(), incident_id)
@@ -284,7 +287,7 @@ class MediaUpdate(Resource):
                     'Error': 'You cannot update an incident that does not belong to you!'
                 }, 401
 
-            self.db.updatemedia(filepath, incident_id, get_jwt_identity())
+            self.db.updatemedia(url, incident_id, get_jwt_identity())
             return jsonify({
                 'Message': 'Updated {} media successfully!'.format(incidenttype),
                 'data': [
