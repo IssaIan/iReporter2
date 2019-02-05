@@ -18,7 +18,7 @@ function getIncidents(){
                   <li class="list-group-item"><strong>TYPE OF INCIDENT: </strong>${incident.type}</li>
                   <li class="list-group-item"><strong>DESCRIPTION: </strong>${incident.description}</li>
                   <li class="list-group-item"><strong>LOCATION: </strong>${incident.location}</li>
-                  <li class="list-group-item"><img src="${incident.media_path}.png" alt="Incident image" width="800" height="500"></li> 
+                  <li class="list-group-item"><img src="${incident.media_path}.png" alt="Incident image" height=auto></li> 
               </ul>
               `;
                 });
