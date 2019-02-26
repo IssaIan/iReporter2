@@ -20,21 +20,24 @@
         </nav>
     </header>
     <div>
-        <button id="getallincidents" class="button btn-blue" onclick="openPage('allIncidents',this)">View All Incidents</button>
+        <button id="getallincidents" class="button btn-blue" onclick="openPage('allIncidents',this)">All Incidents</button>
         <button id="createincident" class="button btn-green" onclick="openPage('newIncident',this)"> New Incident</button>
-        <button class="button btn-blue" onclick="openPage('incidentbytype',this)">View Incidents By
+        <button id="userIncident" class="button btn-blue" onclick="openPage('userincidents',this)">User Incidents</button>
+        <button class="button btn-blue" onclick="openPage('incidentbytype',this)">User Incidents By
             Type</button>
-        <button class="button btn-blue" onclick="openPage('incidentbystatus',this)">View Incidents By
+        <button class="button btn-blue" onclick="openPage('incidentbystatus',this)">User Incidents By
                 Status</button>
-        <button class="button btn-blue" onclick="openPage('editIncident',this)"> Edit Incident</button>
-        <button class="button btn-red" onclick="openPage('deleteIncident',this)"> Delete Incident</button>
+        <button class="button btn-blue" onclick="openPage('editIncident',this)">Edit an Incident</button>
+        <button class="button btn-red" onclick="openPage('deleteIncident',this)">Delete an Incident</button>
 
     </div>
 
     <section class="flex-container" id="allIncidents">
         <div id="output3" class="record-form"></div>
     </section>
-
+    <section class="flex-container" id="userincidents">
+        <div id="output0" class="record-form"></div>
+    </section>
     <section class="flex-container" id="incidentbytype">
         <div class="record-form">
             <form class="flag-form">
