@@ -354,3 +354,22 @@ class Admin(Resource):
                 }
             ]
         }, 200)
+
+
+class UserIncidents(Resource):
+    """Handles retrieval of all incidents in the system that a user created"""
+
+    def __init__(self):
+        self.db = IncidentModels()
+
+    @jwt_required
+    def get(self):
+        incident = self.db.get_user_incidents(get_jwt_identity())
+        if incident == []:
+            return {
+                'Error': 'Records not found!'
+            }, 404
+        return jsonify({
+            'Message': 'Records returned successfully',
+            'Data': incident
+        }, 200)
