@@ -3,7 +3,7 @@ from flask_restful import Api
 
 from app.api.v2.views.incidentviews import (Admin, CommentUpdate, Incident,
                                             Incidents, LocationUpdate, Status,
-                                            Type, MediaUpdate)
+                                            Type, MediaUpdate, UserIncidents)
 from app.api.v2.views.userviews import Login, Users
 
 version_two = Blueprint('api_v2', __name__, url_prefix='/api/v2')
@@ -19,3 +19,4 @@ api.add_resource(LocationUpdate, '/<incidenttype>/<int:incident_id>/location')
 api.add_resource(CommentUpdate, '/<incidenttype>/<int:incident_id>/comment')
 api.add_resource(Admin, '/admin/<incidenttype>/<int:incident_id>/statusupdate')
 api.add_resource(MediaUpdate, '/<incidenttype>/<int:incident_id>/media')
+api.add_resource(UserIncidents, '/userincidents')
